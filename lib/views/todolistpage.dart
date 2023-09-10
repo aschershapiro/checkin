@@ -1,12 +1,20 @@
+import 'package:checkin/database/obx2pb.dart';
 import 'package:checkin/main.dart';
+import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/routes.dart';
 import 'package:checkin/views/newtodotaskdialog.dart';
 import 'package:checkin/views/todolistwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 class TodoListPage extends StatelessWidget {
-  const TodoListPage({super.key});
+  TodoListPage({super.key}) {
+    _init();
+  }
+  void _init() async {}
+
+  @override
 
   //late final Controller c;
 
@@ -27,6 +35,9 @@ class TodoListPage extends StatelessWidget {
                 if (result != null) {
                   c.todos.add(result);
                   objectBox.todosBox.put(result);
+                  c.settings.value.boxDate = DateTime.now();
+
+                  Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
                 }
               },
               child: const Icon(Icons.add),
@@ -36,7 +47,12 @@ class TodoListPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       c.todos.removeWhere((element) {
-                        if (element.selected.value) objectBox.todosBox.remove(element.id);
+                        if (element.selected.value) {
+                          objectBox.todosBox.remove(element.id);
+                          c.settings.value.boxDate = DateTime.now();
+
+                          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                        }
                         return element.selected.value;
                       });
                     },

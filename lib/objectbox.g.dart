@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/day.dart';
+import 'models/settings.dart';
 import 'models/todoitem.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
@@ -78,6 +79,30 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(3, 8950029361012055698),
+      name: 'Settings',
+      lastPropertyId: const IdUid(3, 770571084687439746),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8697491081640398908),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 7897454177858843942),
+            name: 'serverDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 770571084687439746),
+            name: 'boxDate',
+            type: 10,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -108,7 +133,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 5955013199925436597),
+      lastEntityId: const IdUid(3, 8950029361012055698),
       lastIndexId: const IdUid(1, 6202541818411785614),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -190,6 +215,35 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGet(buffer, rootOffset, 12, '');
 
           return object;
+        }),
+    Settings: EntityDefinition<Settings>(
+        model: _entities[2],
+        toOneRelations: (Settings object) => [],
+        toManyRelations: (Settings object) => {},
+        getId: (Settings object) => object.id,
+        setId: (Settings object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Settings object, fb.Builder fbb) {
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.serverDate.millisecondsSinceEpoch);
+          fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Settings()
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..serverDate = DateTime.fromMillisecondsSinceEpoch(
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0))
+            ..boxDate = DateTime.fromMillisecondsSinceEpoch(
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+
+          return object;
         })
   };
 
@@ -228,4 +282,18 @@ class DayBox_ {
   /// see [DayBox.minusJsonString]
   static final minusJsonString =
       QueryStringProperty<DayBox>(_entities[1].properties[3]);
+}
+
+/// [Settings] entity fields to define ObjectBox queries.
+class Settings_ {
+  /// see [Settings.id]
+  static final id = QueryIntegerProperty<Settings>(_entities[2].properties[0]);
+
+  /// see [Settings.serverDate]
+  static final serverDate =
+      QueryIntegerProperty<Settings>(_entities[2].properties[1]);
+
+  /// see [Settings.boxDate]
+  static final boxDate =
+      QueryIntegerProperty<Settings>(_entities[2].properties[2]);
 }

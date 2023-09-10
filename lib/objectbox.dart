@@ -1,4 +1,6 @@
+import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
+import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
@@ -10,18 +12,20 @@ class ObjectBox {
   late final Store store;
   late final Box<TodoItem> todosBox;
   late final Box<DayBox> dayBox;
-  late final Query<DayBox> query;
+  late final Box<Settings> settingsBox;
+  late final Query<DayBox> _query;
 
   ObjectBox._create(this.store) {
     todosBox = store.box<TodoItem>();
     dayBox = store.box<DayBox>();
+    settingsBox = store.box<Settings>();
     // Add any additional setup code, e.g. build queries.
-    query = dayBox.query(DayBox_.date.equals(DateFormat('yyyy-MM-dd').format(DateTime.now()))).build();
+    _query = dayBox.query(DayBox_.date.equals(DateFormat('yyyy-MM-dd').format(DateTime.now()))).build();
   }
 
   DayBox? findToday() {
-    var res = query.find();
-    query.close();
+    var res = _query.find();
+    _query.close();
     return res.firstOrNull;
   }
 

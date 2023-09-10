@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 List<GetPage<dynamic>> appRoutes = [
   GetPage(
     name: '/todolist',
-    page: () => const TodoListPage(),
+    page: () => TodoListPage(),
     transition: Transition.fadeIn,
     transitionDuration: const Duration(milliseconds: 200),
   ),

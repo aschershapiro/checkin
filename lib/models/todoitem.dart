@@ -21,5 +21,7 @@ class TodoItem {
   @Transient()
   var selected = false.obs;
 
-  TodoItem({required this.task, this.dueDate});
+  TodoItem({required this.task, this.dueDate, bool? stat}) {
+    status = stat ?? false;
+  }
 }
