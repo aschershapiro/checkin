@@ -12,7 +12,10 @@ final pb = PocketBase('https://checkin.iran.liara.run');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  c = Controller();
+  objectBox.dayBox.removeAll();
+  objectBox.todosBox.removeAll();
+  c = Get.put(Controller());
+  await c.init();
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Checkin',

@@ -1,6 +1,7 @@
 import 'package:checkin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:checkin/database/obx2pb.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -53,6 +54,21 @@ class LoginPage extends StatelessWidget {
                   onChanged: (value) {
                     c.password.value = value;
                   },
+                  onSubmitted: (value) async {
+                    if (c.username.value != '') {
+                      c.isLoading.value = true;
+                      final authData = await pb.collection('users').authWithPassword(
+                            c.username.value,
+                            c.password.value,
+                          );
+                      c.isLoading.value = false;
+                      if (pb.authStore.isValid) {
+                        //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                        Database.syncServer2Box(objectBox: objectBox, pocketBase: pb);
+                        Get.offAndToNamed('/todolist');
+                      }
+                    }
+                  },
                 ),
               ),
             ),
@@ -66,9 +82,12 @@ class LoginPage extends StatelessWidget {
                         c.password.value,
                       );
                   c.isLoading.value = false;
-                  if (pb.authStore.isValid) Get.offAndToNamed('/todolist');
+                  if (pb.authStore.isValid) {
+                    //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                    Get.offAndToNamed('/todolist');
+                  }
                 },
-                icon: Obx(() => c.isLoading.value ? Icon(Icons.circle) : Icon(Icons.login)),
+                icon: Obx(() => c.isLoading.value ? const CircularProgressIndicator() : const Icon(Icons.login)),
                 splashColor: Colors.blue,
               ),
             ),

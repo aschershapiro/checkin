@@ -71,7 +71,7 @@ class DailyPlusPage extends StatelessWidget {
           objectBox.dayBox.put(db);
           c.settings.value.boxDate = DateTime.now();
 
-          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+          //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
           //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
           Get.showSnackbar(
             const GetSnackBar(

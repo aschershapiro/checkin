@@ -18,10 +18,10 @@ class Controller extends GetxController {
   var isLoading = false.obs;
 
   Controller() {
-    _init();
+    //_init();
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     todos.value = objectBox.todosBox.getAll();
     today = Day.fromJson(objectBox.findToday());
   }
