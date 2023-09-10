@@ -1,3 +1,4 @@
+import 'package:checkin/database/obx2pb.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/routes.dart';
@@ -68,6 +69,9 @@ class DailyPlusPage extends StatelessWidget {
           DayBox db = DayBox();
           db.toJson(c.today);
           objectBox.dayBox.put(db);
+          c.settings.value.boxDate = DateTime.now();
+
+          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
           //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
           Get.showSnackbar(
             const GetSnackBar(
