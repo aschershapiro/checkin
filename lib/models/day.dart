@@ -43,7 +43,7 @@ class Day {
 
 @Entity()
 class DayBox {
-  @Id()
+@Id(assignable: true)
   int id = 0;
   @Unique(onConflict: ConflictStrategy.replace)
   String date = '';

@@ -25,7 +25,7 @@ class TodoListWidget extends StatelessWidget {
                   c.todos[index].status = !c.todos[index].status;
                   objectBox.todosBox.put(c.todos[index]);
                   c.settings.value.boxDate = DateTime.now();
-                  //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                  Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
                 },
               ),
               subtitle: todos[index].dueDate != null ? Text('Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ') : null,

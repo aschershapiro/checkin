@@ -54,21 +54,6 @@ class LoginPage extends StatelessWidget {
                   onChanged: (value) {
                     c.password.value = value;
                   },
-                  onSubmitted: (value) async {
-                    if (c.username.value != '') {
-                      c.isLoading.value = true;
-                      final authData = await pb.collection('users').authWithPassword(
-                            c.username.value,
-                            c.password.value,
-                          );
-                      c.isLoading.value = false;
-                      if (pb.authStore.isValid) {
-                        //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
-                        Database.syncServer2Box(objectBox: objectBox, pocketBase: pb);
-                        Get.offAndToNamed('/todolist');
-                      }
-                    }
-                  },
                 ),
               ),
             ),
@@ -77,20 +62,38 @@ class LoginPage extends StatelessWidget {
               child: IconButton(
                 onPressed: () async {
                   c.isLoading.value = true;
-                  final authData = await pb.collection('users').authWithPassword(
-                        c.username.value,
-                        c.password.value,
-                      );
-                  c.isLoading.value = false;
+                  c.isSyncing.value = false;
+                  final authData =
+                      await pb.collection('users').authWithPassword(
+                            c.username.value,
+                            c.password.value,
+                          );
+                  
                   if (pb.authStore.isValid) {
-                    //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                    c.isSyncing.value = true;
+                    await Database.initialSync(
+                        objectBox: objectBox,
+                        pocketBase: pb,
+                        settings: set.value);
+                    await c.init();
+                    c.isSyncing.value = false;
+                    c.isLoading.value = false;
                     Get.offAndToNamed('/todolist');
                   }
                 },
-                icon: Obx(() => c.isLoading.value ? const CircularProgressIndicator() : const Icon(Icons.login)),
+                icon: Obx(() => c.isLoading.value
+                    ? const CircularProgressIndicator()
+                    : const Icon(Icons.login)),
                 splashColor: Colors.blue,
               ),
             ),
+            Obx(() => Visibility(
+                  visible: c.isSyncing.value,
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Syncing your data with cloud.'),
+                  ),
+                ))
           ],
         ),
       ),

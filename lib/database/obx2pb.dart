@@ -3,10 +3,11 @@ import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/objectbox.dart';
 import 'package:checkin/objectbox.g.dart';
+import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class Database {
-  static void syncBox2Server({required ObjectBox objectBox, required PocketBase pocketBase}) async {
+  static Future<void> syncBox2Server({required ObjectBox objectBox, required PocketBase pocketBase}) async {
     // sync todos from box to server
     var resp = await pocketBase.collection('todo_items').getFullList();
     var boxItems = objectBox.todosBox.getAll();
@@ -60,9 +61,12 @@ class Database {
         pocketBase.collection('days').delete(item.id);
       }
     }
+    var id = await pocketBase.collection('settings').getFullList().then((value) => value.where((element) => element.data['title']=='syncdate').first.id);
+    pocketBase.collection('settings').update(id,body: <String,dynamic>{'title': 'syncdate', 'value': DateTime.now().subtract(const Duration(minutes: 1)).toString()});
+
   }
 
-  static void syncServer2Box({required ObjectBox objectBox, required PocketBase pocketBase}) async {
+  static Future<void> syncServer2Box({required ObjectBox objectBox, required PocketBase pocketBase}) async {
     //sync todos from server to box
     var resp = await pocketBase.collection('todo_items').getFullList();
     var boxItems = objectBox.todosBox.getAll();
@@ -101,7 +105,7 @@ class Database {
       var contains = boxdays.fold(false, (previousValue, element) => previousValue || element.id == item.data['boxid']);
       //update
       if (contains) {
-        var boxId = boxdays.where((element) => element.id == item.data['boxid']).first.id;
+        //var boxId = boxdays.where((element) => element.id == item.data['boxid']).first.id;
         var dayBox = DayBox()
           ..date = item.data['date'].toString().isNotEmpty ? item.data['date'].toString().substring(0, 10) : ''
           ..id = item.data['boxid']
@@ -128,11 +132,15 @@ class Database {
     }
   }
 
-  static void sync({required ObjectBox objectBox, required PocketBase pocketBase, required Settings settings}) {
-    if (settings.serverDate.isAfter(settings.boxDate)) {
-      syncServer2Box(objectBox: objectBox, pocketBase: pocketBase);
+  static Future<void> initialSync({required ObjectBox objectBox, required PocketBase pocketBase, required Settings settings}) async{
+        var aaa =  await pocketBase.collection('settings').getFullList().then((value) => value.firstWhere((element) => element.data['title']=='syncdate').data['value'].toString());
+        var serverDate = DateTime.parse(aaa);
+
+    if (serverDate.isAfter(settings.boxDate)) {
+      await syncServer2Box(objectBox: objectBox, pocketBase: pocketBase);
     } else {
-      syncBox2Server(objectBox: objectBox, pocketBase: pocketBase);
+      await syncBox2Server(objectBox: objectBox, pocketBase: pocketBase);
     }
   }
+
 }

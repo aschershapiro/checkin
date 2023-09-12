@@ -31,7 +31,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 2349269073575476589),
             name: 'id',
             type: 6,
-            flags: 1),
+            flags: 129),
         ModelProperty(
             id: const IdUid(2, 8201360466034941735),
             name: 'task',
@@ -60,7 +60,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 1394322622962264566),
             name: 'id',
             type: 6,
-            flags: 1),
+            flags: 129),
         ModelProperty(
             id: const IdUid(2, 6556776844641226728),
             name: 'date',
@@ -90,12 +90,7 @@ final _entities = <ModelEntity>[
             id: const IdUid(1, 8697491081640398908),
             name: 'id',
             type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 7897454177858843942),
-            name: 'serverDate',
-            type: 10,
-            flags: 0),
+            flags: 129),
         ModelProperty(
             id: const IdUid(3, 770571084687439746),
             name: 'boxDate',
@@ -139,7 +134,7 @@ ModelDefinition getObjectBoxModel() {
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [3165569036223637437],
+      retiredPropertyUids: const [3165569036223637437, 7897454177858843942],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -227,7 +222,6 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Settings object, fb.Builder fbb) {
           fbb.startTable(4);
           fbb.addInt64(0, object.id);
-          fbb.addInt64(1, object.serverDate.millisecondsSinceEpoch);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
           fbb.finish(fbb.endTable());
           return object.id;
@@ -238,8 +232,6 @@ ModelDefinition getObjectBoxModel() {
 
           final object = Settings()
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
-            ..serverDate = DateTime.fromMillisecondsSinceEpoch(
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0))
             ..boxDate = DateTime.fromMillisecondsSinceEpoch(
                 const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
 
@@ -289,11 +281,7 @@ class Settings_ {
   /// see [Settings.id]
   static final id = QueryIntegerProperty<Settings>(_entities[2].properties[0]);
 
-  /// see [Settings.serverDate]
-  static final serverDate =
-      QueryIntegerProperty<Settings>(_entities[2].properties[1]);
-
   /// see [Settings.boxDate]
   static final boxDate =
-      QueryIntegerProperty<Settings>(_entities[2].properties[2]);
+      QueryIntegerProperty<Settings>(_entities[2].properties[1]);
 }

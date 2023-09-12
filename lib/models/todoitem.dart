@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 @Entity()
 class TodoItem {
-  @Id()
+@Id(assignable: true)
   int id = 0;
 
   String task;

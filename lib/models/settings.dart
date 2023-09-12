@@ -3,13 +3,13 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Settings {
-  @Id()
+@Id(assignable: true)
   int id = 0;
 
   @Unique(onConflict: ConflictStrategy.replace)
   final String dummy = 'Settings';
-  @Property(type: PropertyType.date)
-  DateTime serverDate = DateTime(1990);
+  // @Property(type: PropertyType.date)
+  // DateTime serverDate = DateTime(1990);
   @Property(type: PropertyType.date)
   DateTime boxDate = DateTime(1990);
   @Transient()

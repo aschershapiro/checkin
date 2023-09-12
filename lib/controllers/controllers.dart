@@ -3,7 +3,6 @@ import 'package:checkin/models/day.dart';
 import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:get/get.dart';
-import 'package:checkin/database/obx2pb.dart';
 
 class Controller extends GetxController {
   var pagecounter = 0.obs;
@@ -12,16 +11,18 @@ class Controller extends GetxController {
   get plusSelected => today.taskPlusList.fold(false, (previousValue, element) => previousValue || element.selected.value);
   get minusSelected => today.taskMinusList.fold(false, (previousValue, element) => previousValue || element.selected.value);
   late final Day today;
-  var settings = objectBox.settingsBox.getAll().firstOrNull?.obs ?? Settings().obs;
+  late Rx<Settings> settings;
   var username = ''.obs;
   var password = ''.obs;
   var isLoading = false.obs;
+  var isSyncing = false.obs;
 
   Controller() {
     //_init();
   }
 
   Future<void> init() async {
+    settings = set;
     todos.value = objectBox.todosBox.getAll();
     today = Day.fromJson(objectBox.findToday());
   }

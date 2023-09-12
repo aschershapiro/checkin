@@ -36,8 +36,7 @@ class TodoListPage extends StatelessWidget {
                   c.todos.add(result);
                   objectBox.todosBox.put(result);
                   c.settings.value.boxDate = DateTime.now();
-
-                  //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                  Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
                 }
               },
               child: const Icon(Icons.add),
@@ -50,8 +49,7 @@ class TodoListPage extends StatelessWidget {
                         if (element.selected.value) {
                           objectBox.todosBox.remove(element.id);
                           c.settings.value.boxDate = DateTime.now();
-
-                          //Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
                         }
                         return element.selected.value;
                       });

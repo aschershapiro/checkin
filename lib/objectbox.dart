@@ -28,7 +28,11 @@ class ObjectBox {
     _query.close();
     return res.firstOrNull;
   }
-
+  void resetBox({required ObjectBox ob}){
+    ob.dayBox.removeAll();
+    ob.settingsBox.removeAll();
+    ob.todosBox.removeAll();
+  }
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create() async {
     final docsDir = await getApplicationDocumentsDirectory();
