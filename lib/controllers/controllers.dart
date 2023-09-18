@@ -16,6 +16,10 @@ class Controller extends GetxController {
   var password = ''.obs;
   var isLoading = false.obs;
   var isSyncing = false.obs;
+  var username_signup = ''.obs;
+  var password_signup = ''.obs;
+  var email_signup = ''.obs;
+  var password_c_signup = ''.obs;
 
   Controller() {
     //_init();
