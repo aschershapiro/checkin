@@ -3,7 +3,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Settings {
-@Id(assignable: true)
+  @Id(assignable: true)
   int id = 0;
 
   @Unique(onConflict: ConflictStrategy.replace)
@@ -16,7 +16,8 @@ class Settings {
   var dailyPlusTitles = ['Task1', 'Task2', 'Task3', 'Task4'].obs;
   @Transient()
   var dailyMinusTitles = ['-Task1', '-Task2', '-Task3', '-Task4'].obs;
-
+  var userId = '';
+  var userToken = '';
   Settings();
 }
 

@@ -1,7 +1,7 @@
 import 'package:checkin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:checkin/database/obx2pb.dart';
+import 'package:checkin/database/database.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class SignupPage extends StatelessWidget {
@@ -96,26 +96,12 @@ class SignupPage extends StatelessWidget {
               child: IconButton(
                   onPressed: () async {
                     try {
-                      final body = <String, dynamic>{
-                        "username": c.username_signup.value,
-                        "email": c.email_signup.value,
-                        "emailVisibility": true,
-                        "password": c.password_signup.value,
-                        "passwordConfirm": c.password_c_signup.value,
-                        "name": c.username_signup.value
-                      };
-
-                      final record =
-                          await pb.collection('users').create(body: body);
-                      final body2 = <String, dynamic>{
-                        "title": "syncdate",
-                        "value": DateTime(1990).toString(),
-                        "user": record.id
-                      };
-                      await pb.collection('settings').create(body: body2);
-                      await pb
-                          .collection('users')
-                          .requestVerification(c.email_signup.value);
+                      await database.signup(
+                          email: c.email_signup.value,
+                          emailVisibility: true,
+                          password: c.password_signup.value,
+                          passwordConfirm: c.password_c_signup.value,
+                          username: c.username_signup.value);
                       Get.back();
                     } on ClientException catch (e) {
                       var resp = e.response;

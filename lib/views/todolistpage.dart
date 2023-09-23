@@ -1,4 +1,4 @@
-import 'package:checkin/database/obx2pb.dart';
+import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/routes.dart';
@@ -24,7 +24,9 @@ class TodoListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50,
-        title: Center(child: Text('${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}')),
+        title: Center(
+            child: Text(
+                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} ID: ${c.settings.value.userId}')),
         leading: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,7 +38,8 @@ class TodoListPage extends StatelessWidget {
                   c.todos.add(result);
                   objectBox.todosBox.put(result);
                   c.settings.value.boxDate = DateTime.now();
-                  Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                  objectBox.settingsBox.put(c.settings.value);
+                  database.syncBox2Server(objectBox: objectBox);
                 }
               },
               child: const Icon(Icons.add),
@@ -49,7 +52,8 @@ class TodoListPage extends StatelessWidget {
                         if (element.selected.value) {
                           objectBox.todosBox.remove(element.id);
                           c.settings.value.boxDate = DateTime.now();
-                          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                          objectBox.settingsBox.put(c.settings.value);
+                          database.syncBox2Server(objectBox: objectBox);
                         }
                         return element.selected.value;
                       });
@@ -69,10 +73,22 @@ class TodoListPage extends StatelessWidget {
             Get.toNamed(appRoutes[value].name);
           },
           destinations: const <Widget>[
-            NavigationDestination(icon: Icon(Icons.checklist_outlined), selectedIcon: Icon(Icons.checklist), label: 'To Do'),
-            NavigationDestination(icon: Icon(Icons.plus_one_outlined), selectedIcon: Icon(Icons.plus_one), label: 'Daily +'),
-            NavigationDestination(icon: Icon(Icons.exposure_minus_1_outlined), selectedIcon: Icon(Icons.exposure_minus_1), label: 'Daily -'),
-            NavigationDestination(icon: Icon(Icons.summarize_outlined), selectedIcon: Icon(Icons.summarize), label: 'Report'),
+            NavigationDestination(
+                icon: Icon(Icons.checklist_outlined),
+                selectedIcon: Icon(Icons.checklist),
+                label: 'To Do'),
+            NavigationDestination(
+                icon: Icon(Icons.plus_one_outlined),
+                selectedIcon: Icon(Icons.plus_one),
+                label: 'Daily +'),
+            NavigationDestination(
+                icon: Icon(Icons.exposure_minus_1_outlined),
+                selectedIcon: Icon(Icons.exposure_minus_1),
+                label: 'Daily -'),
+            NavigationDestination(
+                icon: Icon(Icons.summarize_outlined),
+                selectedIcon: Icon(Icons.summarize),
+                label: 'Report'),
           ],
         ),
       ),

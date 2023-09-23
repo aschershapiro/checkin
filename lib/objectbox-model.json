@@ -65,7 +65,7 @@
     },
     {
       "id": "3:8950029361012055698",
-      "lastPropertyId": "3:770571084687439746",
+      "lastPropertyId": "5:7694432728761539532",
       "name": "Settings",
       "properties": [
         {
@@ -78,6 +78,16 @@
           "id": "3:770571084687439746",
           "name": "boxDate",
           "type": 10
+        },
+        {
+          "id": "4:1500705847024000333",
+          "name": "userId",
+          "type": 9
+        },
+        {
+          "id": "5:7694432728761539532",
+          "name": "userToken",
+          "type": 9
         }
       ],
       "relations": []

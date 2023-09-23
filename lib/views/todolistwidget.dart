@@ -1,5 +1,5 @@
 import 'package:checkin/controllers/controllers.dart';
-import 'package:checkin/database/obx2pb.dart';
+import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +25,14 @@ class TodoListWidget extends StatelessWidget {
                   c.todos[index].status = !c.todos[index].status;
                   objectBox.todosBox.put(c.todos[index]);
                   c.settings.value.boxDate = DateTime.now();
-                  Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+                  objectBox.settingsBox.put(c.settings.value);
+                  database.syncBox2Server(objectBox: objectBox);
                 },
               ),
-              subtitle: todos[index].dueDate != null ? Text('Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ') : null,
+              subtitle: todos[index].dueDate != null
+                  ? Text(
+                      'Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ')
+                  : null,
               onLongPress: () {
                 todos[index].selected.toggle();
               },

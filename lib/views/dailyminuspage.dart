@@ -1,4 +1,4 @@
-import 'package:checkin/database/obx2pb.dart';
+import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/routes.dart';
@@ -15,7 +15,9 @@ class DailyMinusPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50,
-        title: Center(child: Text('${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}')),
+        title: Center(
+            child: Text(
+                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}')),
         leading: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,7 +38,8 @@ class DailyMinusPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     c.today.taskMinusList.removeWhere((element) {
-                      if (element.selected.value) c.settings.value.dailyMinusTitles.remove(element.title);
+                      if (element.selected.value)
+                        c.settings.value.dailyMinusTitles.remove(element.title);
                       return element.selected.value;
                     });
                   },
@@ -56,10 +59,22 @@ class DailyMinusPage extends StatelessWidget {
             Get.toNamed(appRoutes[value].name);
           },
           destinations: const <Widget>[
-            NavigationDestination(icon: Icon(Icons.checklist_outlined), selectedIcon: Icon(Icons.checklist), label: 'To Do'),
-            NavigationDestination(icon: Icon(Icons.plus_one_outlined), selectedIcon: Icon(Icons.plus_one), label: 'Daily +'),
-            NavigationDestination(icon: Icon(Icons.exposure_minus_1_outlined), selectedIcon: Icon(Icons.exposure_minus_1), label: 'Daily -'),
-            NavigationDestination(icon: Icon(Icons.summarize_outlined), selectedIcon: Icon(Icons.summarize), label: 'Report'),
+            NavigationDestination(
+                icon: Icon(Icons.checklist_outlined),
+                selectedIcon: Icon(Icons.checklist),
+                label: 'To Do'),
+            NavigationDestination(
+                icon: Icon(Icons.plus_one_outlined),
+                selectedIcon: Icon(Icons.plus_one),
+                label: 'Daily +'),
+            NavigationDestination(
+                icon: Icon(Icons.exposure_minus_1_outlined),
+                selectedIcon: Icon(Icons.exposure_minus_1),
+                label: 'Daily -'),
+            NavigationDestination(
+                icon: Icon(Icons.summarize_outlined),
+                selectedIcon: Icon(Icons.summarize),
+                label: 'Report'),
           ],
         ),
       ),
@@ -70,7 +85,8 @@ class DailyMinusPage extends StatelessWidget {
           db.toJson(c.today);
           objectBox.dayBox.put(db);
           c.settings.value.boxDate = DateTime.now();
-          Database.syncBox2Server(objectBox: objectBox, pocketBase: pb);
+          objectBox.settingsBox.put(c.settings.value);
+          database.syncBox2Server(objectBox: objectBox);
           //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
           Get.showSnackbar(
             const GetSnackBar(

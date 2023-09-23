@@ -1,7 +1,7 @@
 import 'package:checkin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:checkin/database/obx2pb.dart';
+import 'package:checkin/database/database.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class LoginPage extends StatelessWidget {
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                   autofocus: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Username',
+                    labelText: 'Email',
                   ),
                   onChanged: (value) {
                     c.username.value = value;
@@ -65,18 +65,11 @@ class LoginPage extends StatelessWidget {
                   try {
                     c.isLoading.value = true;
                     c.isSyncing.value = false;
-                    final authData =
-                        await pb.collection('users').authWithPassword(
-                              c.username.value,
-                              c.password.value,
-                            );
-
-                    if (pb.authStore.isValid) {
+                    await database.login(c.username.value, c.password.value);
+                    if (database.isAuth) {
                       c.isSyncing.value = true;
-                      await Database.initialSync(
-                          objectBox: objectBox,
-                          pocketBase: pb,
-                          settings: set.value);
+                      await database.initialSync(
+                          objectBox: objectBox, settings: c.settings.value);
                       await c.init();
                       c.isSyncing.value = false;
                       c.isLoading.value = false;

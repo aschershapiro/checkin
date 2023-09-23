@@ -83,7 +83,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 8950029361012055698),
       name: 'Settings',
-      lastPropertyId: const IdUid(3, 770571084687439746),
+      lastPropertyId: const IdUid(5, 7694432728761539532),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -95,6 +95,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 770571084687439746),
             name: 'boxDate',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1500705847024000333),
+            name: 'userId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7694432728761539532),
+            name: 'userToken',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -220,9 +230,13 @@ ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (Settings object, fb.Builder fbb) {
-          fbb.startTable(4);
+          final userIdOffset = fbb.writeString(object.userId);
+          final userTokenOffset = fbb.writeString(object.userToken);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
+          fbb.addOffset(3, userIdOffset);
+          fbb.addOffset(4, userTokenOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -233,7 +247,11 @@ ModelDefinition getObjectBoxModel() {
           final object = Settings()
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
             ..boxDate = DateTime.fromMillisecondsSinceEpoch(
-                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0));
+                const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0))
+            ..userId = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 10, '')
+            ..userToken = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 12, '');
 
           return object;
         })
@@ -284,4 +302,12 @@ class Settings_ {
   /// see [Settings.boxDate]
   static final boxDate =
       QueryIntegerProperty<Settings>(_entities[2].properties[1]);
+
+  /// see [Settings.userId]
+  static final userId =
+      QueryStringProperty<Settings>(_entities[2].properties[2]);
+
+  /// see [Settings.userToken]
+  static final userToken =
+      QueryStringProperty<Settings>(_entities[2].properties[3]);
 }

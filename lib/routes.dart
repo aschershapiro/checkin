@@ -33,7 +33,7 @@ List<GetPage<dynamic>> appRoutes = [
     transition: Transition.fadeIn,
     transitionDuration: const Duration(milliseconds: 200),
   ),
-    GetPage(
+  GetPage(
     name: '/signup',
     page: () => const SignupPage(),
     middlewares: [MyMiddelware()],
@@ -49,5 +49,3 @@ class MyMiddelware extends GetMiddleware {
     return super.onPageCalled(page);
   }
 }
-
-var routeList = ['/todolist', '/dailyplus', '/dailyminus'];
