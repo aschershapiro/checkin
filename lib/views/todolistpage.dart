@@ -1,12 +1,10 @@
-import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
-import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/routes.dart';
+import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newtodotaskdialog.dart';
 import 'package:checkin/views/todolistwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pocketbase/pocketbase.dart';
 
 class TodoListPage extends StatelessWidget {
   TodoListPage({super.key}) {
@@ -22,48 +20,74 @@ class TodoListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // todosBox.putMany(todos);
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 50,
-        title: Center(
-            child: Text(
-                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} ID: ${c.settings.value.userId}')),
-        leading: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
           children: [
-            ElevatedButton(
-              onPressed: () async {
-                var result = await newTodoTaskDialog();
-                if (result != null) {
-                  c.todos.add(result);
-                  objectBox.todosBox.put(result);
-                  c.settings.value.boxDate = DateTime.now();
-                  objectBox.settingsBox.put(c.settings.value);
-                  database.syncBox2Server(objectBox: objectBox);
-                }
-              },
-              child: const Icon(Icons.add),
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Checkin 0.1b\n${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} \nID: ${c.settings.value.userId}',
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
-            Obx(() => Visibility(
-                  visible: c.itemsSelected,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      c.todos.removeWhere((element) {
-                        if (element.selected.value) {
-                          objectBox.todosBox.remove(element.id);
-                          c.settings.value.boxDate = DateTime.now();
-                          objectBox.settingsBox.put(c.settings.value);
-                          database.syncBox2Server(objectBox: objectBox);
-                        }
-                        return element.selected.value;
-                      });
-                    },
-                    child: const Icon(Icons.remove),
-                  ),
-                )),
+            ListTile(
+              title: const Text('Log out'),
+              leading: const Icon(Icons.logout),
+              onTap: () {
+                database.logout();
+                Get.off(() => const LoginPage());
+              },
+            ),
+            ListTile(
+              title: const Text('Settings'),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
           ],
         ),
-        leadingWidth: 150,
+      ),
+      appBar: AppBar(
+        actions: [
+          Obx(() => Visibility(
+                visible: c.itemsSelected,
+                child: ElevatedButton(
+                  onPressed: () {
+                    c.todos.removeWhere((element) {
+                      if (element.selected.value) {
+                        objectBox.todosBox.remove(element.id);
+                        c.settings.value.boxDate = DateTime.now();
+                        objectBox.settingsBox.put(c.settings.value);
+                        database.syncBox2Server(objectBox: objectBox);
+                      }
+                      return element.selected.value;
+                    });
+                  },
+                  child: const Icon(Icons.remove),
+                ),
+              )),
+          ElevatedButton(
+            onPressed: () async {
+              var result = await newTodoTaskDialog();
+              if (result != null) {
+                c.todos.add(result);
+                objectBox.todosBox.put(result);
+                c.settings.value.boxDate = DateTime.now();
+                objectBox.settingsBox.put(c.settings.value);
+                database.syncBox2Server(objectBox: objectBox);
+              }
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
+        toolbarHeight: 50,
+        title: const Text('To Do List'),
       ),
       bottomNavigationBar: Obx(
         () => NavigationBar(

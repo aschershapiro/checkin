@@ -83,7 +83,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 8950029361012055698),
       name: 'Settings',
-      lastPropertyId: const IdUid(5, 7694432728761539532),
+      lastPropertyId: const IdUid(6, 1027365512269718999),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -104,6 +104,11 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(5, 7694432728761539532),
             name: 'userToken',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1027365512269718999),
+            name: 'password',
             type: 9,
             flags: 0)
       ],
@@ -232,11 +237,13 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (Settings object, fb.Builder fbb) {
           final userIdOffset = fbb.writeString(object.userId);
           final userTokenOffset = fbb.writeString(object.userToken);
-          fbb.startTable(6);
+          final passwordOffset = fbb.writeString(object.password);
+          fbb.startTable(7);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
           fbb.addOffset(3, userIdOffset);
           fbb.addOffset(4, userTokenOffset);
+          fbb.addOffset(5, passwordOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -251,7 +258,9 @@ ModelDefinition getObjectBoxModel() {
             ..userId = const fb.StringReader(asciiOptimization: true)
                 .vTableGet(buffer, rootOffset, 10, '')
             ..userToken = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 12, '');
+                .vTableGet(buffer, rootOffset, 12, '')
+            ..password = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 14, '');
 
           return object;
         })
@@ -310,4 +319,8 @@ class Settings_ {
   /// see [Settings.userToken]
   static final userToken =
       QueryStringProperty<Settings>(_entities[2].properties[3]);
+
+  /// see [Settings.password]
+  static final password =
+      QueryStringProperty<Settings>(_entities[2].properties[4]);
 }

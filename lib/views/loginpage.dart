@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Center(child: Text("Welcome to Checkin")),
       ),
       body: Center(
@@ -53,7 +54,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   obscureText: true,
                   onChanged: (value) {
-                    c.password.value = value;
+                    c.settings.value.password = value;
                   },
                 ),
               ),
@@ -65,7 +66,8 @@ class LoginPage extends StatelessWidget {
                   try {
                     c.isLoading.value = true;
                     c.isSyncing.value = false;
-                    await database.login(c.username.value, c.password.value);
+                    await database.login(
+                        c.username.value, c.settings.value.password);
                     if (database.isAuth) {
                       c.isSyncing.value = true;
                       await database.initialSync(
@@ -76,12 +78,12 @@ class LoginPage extends StatelessWidget {
                       Get.offAndToNamed('/todolist');
                     }
                   } on ClientException catch (e) {
-                    var resp = e.response;
+                    var resp = e;
 
                     Get.showSnackbar(
                       GetSnackBar(
                         title: 'Error',
-                        message: resp['message'].toString(),
+                        message: resp.toString(),
                         icon: const Icon(Icons.error, color: Colors.red),
                         duration: const Duration(seconds: 4),
                       ),

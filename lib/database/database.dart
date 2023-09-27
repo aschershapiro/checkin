@@ -1,5 +1,6 @@
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
+import 'package:checkin/models/encryption.dart';
 import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/objectbox.dart';
@@ -10,6 +11,11 @@ class Database {
   final _pb = PocketBase('https://pb.greenbase.ir');
   bool get isAuth {
     return _pb.authStore.isValid && _pb.authStore.token.isNotEmpty;
+  }
+
+  Future<List<RecordModel>> getAllDays() async {
+    var resp = await _pb.collection('days').getFullList();
+    return resp;
   }
 
   Future<void> syncBox2Server({required ObjectBox objectBox}) async {
@@ -29,8 +35,11 @@ class Database {
               .first
               .id;
           final body = <String, dynamic>{
-            "task": item.task,
-            "user": _pb.authStore.model,
+            "task": Encryption.encryptStringWithPassword(
+                item.task, c.settings.value.password),
+            "user": _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id,
             "completed": item.completed.value,
             "duedate": item.dueDate.toString()
           };
@@ -40,8 +49,11 @@ class Database {
         else {
           final body = <String, dynamic>{
             "boxid": item.id,
-            "task": item.task,
-            "user": _pb.authStore.model,
+            "task": Encryption.encryptStringWithPassword(
+                item.task, c.settings.value.password),
+            'user': _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id,
             "completed": item.completed.value,
             "duedate": item.dueDate.toString()
           };
@@ -74,10 +86,14 @@ class Database {
               .id;
           final body = <String, dynamic>{
             "date": item.date,
-            'dailyplus': item.plusJsonString,
-            'dailyminus': item.minusJsonString,
+            'dailyplus': Encryption.encryptStringWithPassword(
+                item.plusJsonString, c.settings.value.password),
+            'dailyminus': Encryption.encryptStringWithPassword(
+                item.minusJsonString, c.settings.value.password),
             'boxid': item.id,
-            'user': _pb.authStore.model
+            'user': _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id
           };
           _pb.collection('days').update(pbId, body: body);
         }
@@ -85,10 +101,14 @@ class Database {
         else {
           final body = <String, dynamic>{
             "date": item.date,
-            'dailyplus': item.plusJsonString,
-            'dailyminus': item.minusJsonString,
+            'dailyplus': Encryption.encryptStringWithPassword(
+                item.plusJsonString, c.settings.value.password),
+            'dailyminus': Encryption.encryptStringWithPassword(
+                item.minusJsonString, c.settings.value.password),
             'boxid': item.id,
-            'user': _pb.authStore.model
+            'user': _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id
           };
           _pb.collection('days').create(
                 body: body,
@@ -132,7 +152,9 @@ class Database {
             .where((element) => element.id == item.data['boxid'])
             .first
             .id;
-        var todo = TodoItem(task: item.data['task'])
+        var todo = TodoItem(
+            task: Encryption.decryptStringWithPassword(
+                item.data['task'], c.settings.value.password))
           ..completed.value = item.data['completed']
           ..dueDate = DateTime.tryParse(
               item.data['duedate'].toString().isNotEmpty
@@ -143,7 +165,9 @@ class Database {
       }
       // create
       else {
-        var todo = TodoItem(task: item.data['task'])
+        var todo = TodoItem(
+            task: Encryption.decryptStringWithPassword(
+                item.data['task'], c.settings.value.password))
           ..completed.value = item.data['completed']
           ..dueDate = DateTime.tryParse(
               item.data['duedate'].toString().isNotEmpty
@@ -177,8 +201,10 @@ class Database {
               ? item.data['date'].toString().substring(0, 10)
               : ''
           ..id = item.data['boxid']
-          ..minusJsonString = item.data['dailyminus'].toString()
-          ..plusJsonString = item.data['dailyplus'].toString();
+          ..minusJsonString = Encryption.decryptStringWithPassword(
+              item.data['dailyminus'].toString(), c.settings.value.password)
+          ..plusJsonString = Encryption.decryptStringWithPassword(
+              item.data['dailyplus'].toString(), c.settings.value.password);
         objectBox.dayBox.put(dayBox, mode: PutMode.update);
       }
       // create
@@ -188,8 +214,10 @@ class Database {
               ? item.data['date'].toString().substring(0, 10)
               : ''
           ..id = item.data['boxid']
-          ..minusJsonString = item.data['dailyminus'].toString()
-          ..plusJsonString = item.data['dailyplus'].toString();
+          ..minusJsonString = Encryption.decryptStringWithPassword(
+              item.data['dailyminus'].toString(), c.settings.value.password)
+          ..plusJsonString = Encryption.decryptStringWithPassword(
+              item.data['dailyplus'].toString(), c.settings.value.password);
         objectBox.dayBox.put(dayBox, mode: PutMode.put);
       }
     }
@@ -244,7 +272,7 @@ class Database {
           email,
           password,
         );
-    c.settings.value.userId = _pb.authStore.model ?? '';
+    c.settings.value.userId = _pb.authStore.model.id ?? '';
     c.settings.value.userToken = _pb.authStore.token;
     objectBox.settingsBox.put(c.settings.value);
   }
@@ -277,5 +305,14 @@ class Database {
     await objectBox.settingsBox.removeAllAsync();
   }
 
-  Future<void> logout() async {}
+  Future<void> logout() async {
+    _pb.authStore.clear();
+    c.settings.value.userId = '';
+    c.settings.value.userToken = '';
+    c.settings.value.boxDate = DateTime(1980);
+    objectBox.settingsBox.put(c.settings.value);
+    await objectBox.dayBox.removeAllAsync();
+    await objectBox.todosBox.removeAllAsync();
+    await objectBox.settingsBox.removeAllAsync();
+  }
 }

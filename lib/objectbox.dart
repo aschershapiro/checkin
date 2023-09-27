@@ -20,19 +20,24 @@ class ObjectBox {
     dayBox = store.box<DayBox>();
     settingsBox = store.box<Settings>();
     // Add any additional setup code, e.g. build queries.
-    _query = dayBox.query(DayBox_.date.equals(DateFormat('yyyy-MM-dd').format(DateTime.now()))).build();
+    _query = dayBox
+        .query(DayBox_.date
+            .equals(DateFormat('yyyy-MM-dd').format(DateTime.now())))
+        .build();
   }
 
   DayBox? findToday() {
     var res = _query.find();
-    _query.close();
+    // _query.close();
     return res.firstOrNull;
   }
-  void resetBox({required ObjectBox ob}){
+
+  void resetBox({required ObjectBox ob}) {
     ob.dayBox.removeAll();
     ob.settingsBox.removeAll();
     ob.todosBox.removeAll();
   }
+
   /// Create an instance of ObjectBox to use throughout the app.
   static Future<ObjectBox> create() async {
     final docsDir = await getApplicationDocumentsDirectory();

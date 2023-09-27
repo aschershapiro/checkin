@@ -2,6 +2,7 @@ import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/routes.dart';
+import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newdailydialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,26 +13,46 @@ class DailyMinusPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 50,
-        title: Center(
-            child: Text(
-                '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}')),
-        leading: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                var result = await newDailyDialog();
-                if (result != null) {
-                  c.settings.value.dailyMinusTitles.add(result.title);
-                  c.today.taskMinusList.add(result);
-                }
-              },
-              child: const Icon(Icons.add),
-            ),
+    return Theme(
+      data: ThemeData(primarySwatch: Colors.red),
+      child: Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Checkin 0.1b\n${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} \nID: ${c.settings.value.userId}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+              ListTile(
+                title: const Text('Log out'),
+                leading: const Icon(Icons.logout),
+                onTap: () {
+                  database.logout();
+                  Get.off(() => const LoginPage());
+                },
+              ),
+              ListTile(
+                title: const Text('Settings'),
+                leading: const Icon(Icons.settings),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          toolbarHeight: 50,
+          title: Text('Habit tracker for bad habits'),
+          actions: [
             Obx(
               () => Visibility(
                 visible: c.minusSelected,
@@ -47,57 +68,66 @@ class DailyMinusPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
-        leadingWidth: 150,
-      ),
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          selectedIndex: c.pagecounter.value,
-          onDestinationSelected: (value) {
-            c.pagecounter.value = value;
-            Get.toNamed(appRoutes[value].name);
-          },
-          destinations: const <Widget>[
-            NavigationDestination(
-                icon: Icon(Icons.checklist_outlined),
-                selectedIcon: Icon(Icons.checklist),
-                label: 'To Do'),
-            NavigationDestination(
-                icon: Icon(Icons.plus_one_outlined),
-                selectedIcon: Icon(Icons.plus_one),
-                label: 'Daily +'),
-            NavigationDestination(
-                icon: Icon(Icons.exposure_minus_1_outlined),
-                selectedIcon: Icon(Icons.exposure_minus_1),
-                label: 'Daily -'),
-            NavigationDestination(
-                icon: Icon(Icons.summarize_outlined),
-                selectedIcon: Icon(Icons.summarize),
-                label: 'Report'),
-          ],
-        ),
-      ),
-      body: Obx(() => DailyMinusWidget(tasks: c.today.taskMinusList.value)),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          DayBox db = DayBox();
-          db.toJson(c.today);
-          objectBox.dayBox.put(db);
-          c.settings.value.boxDate = DateTime.now();
-          objectBox.settingsBox.put(c.settings.value);
-          database.syncBox2Server(objectBox: objectBox);
-          //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
-          Get.showSnackbar(
-            const GetSnackBar(
-              title: 'Done!',
-              message: 'All tasks saved successfully.',
-              icon: Icon(Icons.done_all, color: Colors.amber),
-              duration: Duration(seconds: 2),
+            ElevatedButton(
+              onPressed: () async {
+                var result = await newDailyDialog();
+                if (result != null) {
+                  c.settings.value.dailyMinusTitles.add(result.title);
+                  c.today.taskMinusList.add(result);
+                }
+              },
+              child: const Icon(Icons.add),
             ),
-          );
-        },
-        child: const Icon(Icons.done),
+          ],
+        ),
+        bottomNavigationBar: Obx(
+          () => NavigationBar(
+            selectedIndex: c.pagecounter.value,
+            onDestinationSelected: (value) {
+              c.pagecounter.value = value;
+              Get.toNamed(appRoutes[value].name);
+            },
+            destinations: const <Widget>[
+              NavigationDestination(
+                  icon: Icon(Icons.checklist_outlined),
+                  selectedIcon: Icon(Icons.checklist),
+                  label: 'To Do'),
+              NavigationDestination(
+                  icon: Icon(Icons.plus_one_outlined),
+                  selectedIcon: Icon(Icons.plus_one),
+                  label: 'Daily +'),
+              NavigationDestination(
+                  icon: Icon(Icons.exposure_minus_1_outlined),
+                  selectedIcon: Icon(Icons.exposure_minus_1),
+                  label: 'Daily -'),
+              NavigationDestination(
+                  icon: Icon(Icons.summarize_outlined),
+                  selectedIcon: Icon(Icons.summarize),
+                  label: 'Report'),
+            ],
+          ),
+        ),
+        body: Obx(() => DailyMinusWidget(tasks: c.today.taskMinusList.value)),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            DayBox db = DayBox();
+            db.toJson(c.today);
+            objectBox.dayBox.put(db);
+            c.settings.value.boxDate = DateTime.now();
+            objectBox.settingsBox.put(c.settings.value);
+            database.syncBox2Server(objectBox: objectBox);
+            //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
+            Get.showSnackbar(
+              const GetSnackBar(
+                title: 'Done!',
+                message: 'All tasks saved successfully.',
+                icon: Icon(Icons.done_all, color: Colors.amber),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+          child: const Icon(Icons.done),
+        ),
       ),
     );
   }

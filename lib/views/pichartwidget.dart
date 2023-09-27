@@ -2,63 +2,85 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieChartWidget extends StatefulWidget {
-  const PieChartWidget({super.key});
-
+  PieChartWidget({super.key, required this.title, required this.values});
+  List<int> values;
+  String title;
   @override
-  State<StatefulWidget> createState() => PieChartWidgetState();
+  State<StatefulWidget> createState() =>
+      PieChartWidgetState(values: values, title: title);
 }
 
 class PieChartWidgetState extends State {
+  PieChartWidgetState({required this.title, required this.values});
   int touchedIndex = 0;
-
+  String title;
+  List<int> values;
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.3,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: PieChart(
-          PieChartData(
-            pieTouchData: PieTouchData(
-              touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                setState(() {
-                  if (!event.isInterestedForInteractions ||
-                      pieTouchResponse == null ||
-                      pieTouchResponse.touchedSection == null) {
-                    touchedIndex = -1;
-                    return;
-                  }
-                  touchedIndex =
-                      pieTouchResponse.touchedSection!.touchedSectionIndex;
-                });
-              },
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(title,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        ),
+        SizedBox(
+          width: 200.0,
+          height: 200.0,
+          child: PieChart(
+            PieChartData(
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      touchedIndex = -1;
+                      return;
+                    }
+                    touchedIndex =
+                        pieTouchResponse.touchedSection!.touchedSectionIndex;
+                  });
+                },
+              ),
+              borderData: FlBorderData(
+                show: false,
+              ),
+              sectionsSpace: 0,
+              centerSpaceRadius: 0,
+              sections: showingSections(
+                  positive: values[0].toDouble(),
+                  neutral: values[1].toDouble(),
+                  negative: values[2].toDouble(),
+                  none: values[3].toDouble()),
             ),
-            borderData: FlBorderData(
-              show: false,
-            ),
-            sectionsSpace: 0,
-            centerSpaceRadius: 0,
-            sections: showingSections(),
           ),
         ),
-      ),
+      ],
     );
   }
 
-  List<PieChartSectionData> showingSections() {
+  List<PieChartSectionData> showingSections(
+      {required double positive,
+      required double neutral,
+      required double negative,
+      required double none}) {
+    double total = positive + negative + neutral + none;
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;
-      final radius = isTouched ? 110.0 : 100.0;
-      final widgetSize = isTouched ? 55.0 : 40.0;
+      final radius = isTouched ? 80.0 : 70.0;
+      final widgetSize = isTouched ? 45.0 : 30.0;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
 
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Colors.blue,
-            value: 40,
-            title: '40%',
+            color: Colors.green,
+            value: positive.toDouble(),
+            // title: '${(positive / total * 100).round()}%',
+            title: positive.toInt().toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -67,7 +89,7 @@ class PieChartWidgetState extends State {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              const Icon(Icons.plus_one),
+              const Icon(Icons.sentiment_very_satisfied),
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -76,8 +98,9 @@ class PieChartWidgetState extends State {
         case 1:
           return PieChartSectionData(
             color: Colors.yellow,
-            value: 50,
-            title: '30%',
+            value: neutral,
+            // title: '${(neutral / total * 100).round()}%',
+            title: neutral.toInt().toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -86,7 +109,7 @@ class PieChartWidgetState extends State {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              const Icon(Icons.plus_one),
+              const Icon(Icons.sentiment_neutral),
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -94,9 +117,10 @@ class PieChartWidgetState extends State {
           );
         case 2:
           return PieChartSectionData(
-            color: Colors.purple,
-            value: 16,
-            title: '16%',
+            color: Colors.red,
+            value: negative,
+            // title: '${(negative / total * 100).round()}%',
+            title: negative.toInt().toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -105,7 +129,7 @@ class PieChartWidgetState extends State {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              const Icon(Icons.plus_one),
+              const Icon(Icons.sentiment_very_dissatisfied),
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -113,9 +137,10 @@ class PieChartWidgetState extends State {
           );
         case 3:
           return PieChartSectionData(
-            color: Colors.green,
-            value: 15,
-            title: '15%',
+            color: Colors.grey,
+            value: none,
+            // title: '${(none / total * 100).round()}%',
+            title: none.toInt().toString(),
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -124,7 +149,7 @@ class PieChartWidgetState extends State {
               shadows: shadows,
             ),
             badgeWidget: _Badge(
-              const Icon(Icons.plus_one),
+              const Icon(Icons.help),
               size: widgetSize,
               borderColor: Colors.black,
             ),
@@ -168,7 +193,7 @@ class _Badge extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(size * .15),
+      padding: EdgeInsets.all(size * 0),
       child: Center(
         child: svgAsset,
       ),

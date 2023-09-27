@@ -18,6 +18,7 @@ class Settings {
   var dailyMinusTitles = ['-Task1', '-Task2', '-Task3', '-Task4'].obs;
   var userId = '';
   var userToken = '';
+  var password = '';
   Settings();
 }
 

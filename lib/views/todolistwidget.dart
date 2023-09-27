@@ -31,7 +31,12 @@ class TodoListWidget extends StatelessWidget {
               ),
               subtitle: todos[index].dueDate != null
                   ? Text(
-                      'Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ')
+                      'Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ',
+                      style: TextStyle(
+                          color: DateTime.now().isAfter(todos[index].dueDate!)
+                              ? Colors.red
+                              : Colors.grey),
+                    )
                   : null,
               onLongPress: () {
                 todos[index].selected.toggle();

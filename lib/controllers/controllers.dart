@@ -13,10 +13,9 @@ class Controller extends GetxController {
       (previousValue, element) => previousValue || element.selected.value);
   get minusSelected => today.taskMinusList.fold(false,
       (previousValue, element) => previousValue || element.selected.value);
-  late final Day today;
+  late Day today;
   Rx<Settings> settings = Settings().obs;
   var username = ''.obs;
-  var password = ''.obs;
   var isLoading = false.obs;
   var isSyncing = false.obs;
   var username_signup = ''.obs;
