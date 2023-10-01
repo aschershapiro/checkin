@@ -116,12 +116,12 @@ class Database {
         }
       }
       //delete
-      var daysIds = boxDays.map((e) => e.id).toList();
-      for (var item in resp) {
-        if (!daysIds.contains(item.data['boxid'])) {
-          _pb.collection('days').delete(item.id);
-        }
-      }
+      // var daysIds = boxDays.map((e) => e.id).toList();
+      // for (var item in resp) {
+      //   if (!daysIds.contains(item.data['boxid'])) {
+      //     _pb.collection('days').delete(item.id);
+      //   }
+      // }
       var id = await _pb.collection('settings').getFullList().then((value) =>
           value
               .where((element) => element.data['title'] == 'syncdate')

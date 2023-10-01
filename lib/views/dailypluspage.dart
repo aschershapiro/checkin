@@ -59,8 +59,9 @@ class DailyPlusPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     c.today.taskPlusList.removeWhere((element) {
-                      if (element.selected.value)
+                      if (element.selected.value) {
                         c.settings.value.dailyPlusTitles.remove(element.title);
+                      }
                       return element.selected.value;
                     });
                   },
