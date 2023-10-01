@@ -65,7 +65,7 @@
     },
     {
       "id": "3:8950029361012055698",
-      "lastPropertyId": "6:1027365512269718999",
+      "lastPropertyId": "8:8629639524485182754",
       "name": "Settings",
       "properties": [
         {
@@ -93,6 +93,16 @@
           "id": "6:1027365512269718999",
           "name": "password",
           "type": 9
+        },
+        {
+          "id": "7:549770024060835807",
+          "name": "dailyPlusTitles",
+          "type": 30
+        },
+        {
+          "id": "8:8629639524485182754",
+          "name": "dailyMinusTitles",
+          "type": 30
         }
       ],
       "relations": []

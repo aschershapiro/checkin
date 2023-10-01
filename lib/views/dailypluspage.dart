@@ -61,6 +61,7 @@ class DailyPlusPage extends StatelessWidget {
                     c.today.taskPlusList.removeWhere((element) {
                       if (element.selected.value) {
                         c.settings.value.dailyPlusTitles.remove(element.title);
+                        objectBox.settingsBox.put(c.settings.value);
                       }
                       return element.selected.value;
                     });
@@ -74,6 +75,7 @@ class DailyPlusPage extends StatelessWidget {
                 var result = await newDailyDialog();
                 if (result != null) {
                   c.settings.value.dailyPlusTitles.add(result.title);
+                  objectBox.settingsBox.put(c.settings.value);
                   c.today.taskPlusList.add(result);
                 }
               },

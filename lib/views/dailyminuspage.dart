@@ -51,7 +51,7 @@ class DailyMinusPage extends StatelessWidget {
         ),
         appBar: AppBar(
           toolbarHeight: 50,
-          title: Text('Habit tracker for bad habits'),
+          title: const Text('Bad habits'),
           actions: [
             Obx(
               () => Visibility(
@@ -59,8 +59,10 @@ class DailyMinusPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     c.today.taskMinusList.removeWhere((element) {
-                      if (element.selected.value)
+                      if (element.selected.value) {
                         c.settings.value.dailyMinusTitles.remove(element.title);
+                        objectBox.settingsBox.put(c.settings.value);
+                      }
                       return element.selected.value;
                     });
                   },
@@ -73,6 +75,7 @@ class DailyMinusPage extends StatelessWidget {
                 var result = await newDailyDialog();
                 if (result != null) {
                   c.settings.value.dailyMinusTitles.add(result.title);
+                  objectBox.settingsBox.put(c.settings.value);
                   c.today.taskMinusList.add(result);
                 }
               },

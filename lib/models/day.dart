@@ -24,10 +24,12 @@ class Day {
       var mapMinus = jsonDecode(db.minusJsonString);
       date = db.date;
       mapPlus.forEach((key, value) {
-        taskPlusList.add(DailyTask(title: key)..condition.value = dailyCondition(int.tryParse(value) ?? 3));
+        taskPlusList.add(DailyTask(title: key)
+          ..condition.value = dailyCondition(int.tryParse(value) ?? 3));
       });
       mapMinus.forEach((key, value) {
-        taskMinusList.add(DailyTask(title: key)..condition.value = dailyCondition(int.tryParse(value) ?? 3));
+        taskMinusList.add(DailyTask(title: key)
+          ..condition.value = dailyCondition(int.tryParse(value) ?? 3));
       });
     } else {
       date = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -43,7 +45,7 @@ class Day {
 
 @Entity()
 class DayBox {
-@Id(assignable: true)
+  @Id(assignable: true)
   int id = 0;
   @Unique(onConflict: ConflictStrategy.replace)
   String date = '';

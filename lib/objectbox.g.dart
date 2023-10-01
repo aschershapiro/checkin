@@ -83,7 +83,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 8950029361012055698),
       name: 'Settings',
-      lastPropertyId: const IdUid(6, 1027365512269718999),
+      lastPropertyId: const IdUid(8, 8629639524485182754),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -110,6 +110,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(6, 1027365512269718999),
             name: 'password',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 549770024060835807),
+            name: 'dailyPlusTitles',
+            type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8629639524485182754),
+            name: 'dailyMinusTitles',
+            type: 30,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -238,12 +248,20 @@ ModelDefinition getObjectBoxModel() {
           final userIdOffset = fbb.writeString(object.userId);
           final userTokenOffset = fbb.writeString(object.userToken);
           final passwordOffset = fbb.writeString(object.password);
-          fbb.startTable(7);
+          final dailyPlusTitlesOffset = fbb.writeList(object.dailyPlusTitles
+              .map(fbb.writeString)
+              .toList(growable: false));
+          final dailyMinusTitlesOffset = fbb.writeList(object.dailyMinusTitles
+              .map(fbb.writeString)
+              .toList(growable: false));
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
           fbb.addOffset(3, userIdOffset);
           fbb.addOffset(4, userTokenOffset);
           fbb.addOffset(5, passwordOffset);
+          fbb.addOffset(6, dailyPlusTitlesOffset);
+          fbb.addOffset(7, dailyMinusTitlesOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -260,7 +278,15 @@ ModelDefinition getObjectBoxModel() {
             ..userToken = const fb.StringReader(asciiOptimization: true)
                 .vTableGet(buffer, rootOffset, 12, '')
             ..password = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 14, '');
+                .vTableGet(buffer, rootOffset, 14, '')
+            ..dailyPlusTitles = const fb.ListReader<String>(
+                    fb.StringReader(asciiOptimization: true),
+                    lazy: false)
+                .vTableGet(buffer, rootOffset, 16, [])
+            ..dailyMinusTitles = const fb.ListReader<String>(
+                    fb.StringReader(asciiOptimization: true),
+                    lazy: false)
+                .vTableGet(buffer, rootOffset, 18, []);
 
           return object;
         })
@@ -323,4 +349,12 @@ class Settings_ {
   /// see [Settings.password]
   static final password =
       QueryStringProperty<Settings>(_entities[2].properties[4]);
+
+  /// see [Settings.dailyPlusTitles]
+  static final dailyPlusTitles =
+      QueryStringVectorProperty<Settings>(_entities[2].properties[5]);
+
+  /// see [Settings.dailyMinusTitles]
+  static final dailyMinusTitles =
+      QueryStringVectorProperty<Settings>(_entities[2].properties[6]);
 }

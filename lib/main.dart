@@ -14,6 +14,7 @@ final database = Database();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
+  //objectBox.dayBox.removeAll();
   c = Get.put(Controller());
   await database.autoLogin();
 
