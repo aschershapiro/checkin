@@ -5,6 +5,7 @@ import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/objectbox.dart';
 import 'package:checkin/objectbox.g.dart';
+import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class Database {
@@ -63,12 +64,13 @@ class Database {
         }
       }
       //delete
-      var boxIds = boxItems.map((e) => e.id).toList();
-      for (var item in resp) {
-        if (!boxIds.contains(item.data['boxid'])) {
-          _pb.collection('todo_items').delete(item.id);
-        }
-      }
+      // var boxIds = boxItems.map((e) => e.id).toList();
+      // for (var item in resp) {
+      //   if (!boxIds.contains(item.data['boxid'])) {
+      //     _pb.collection('todo_items').delete(item.id);
+      //   }
+      // }
+
       // sync day from box to server
       resp = await _pb.collection('days').getFullList();
       var boxDays = objectBox.dayBox.getAll();
@@ -79,7 +81,8 @@ class Database {
                 previousValue || element.data['boxid'] == item.id);
 
         //update
-        if (contains) {
+        if (contains &&
+            item.date == DateFormat('yyyy-MM-dd').format(DateTime.now())) {
           var pbId = resp
               .where((element) => element.data['boxid'] == item.id)
               .first
@@ -98,7 +101,7 @@ class Database {
           _pb.collection('days').update(pbId, body: body);
         }
         //create
-        else {
+        else if (!contains) {
           final body = <String, dynamic>{
             "date": item.date,
             'dailyplus': Encryption.encryptStringWithPassword(
@@ -115,18 +118,42 @@ class Database {
               );
         }
       }
-      //delete
-      // var daysIds = boxDays.map((e) => e.id).toList();
-      // for (var item in resp) {
-      //   if (!daysIds.contains(item.data['boxid'])) {
-      //     _pb.collection('days').delete(item.id);
-      //   }
-      // }
+      // delete
+      var daysIds = boxDays.map((e) => e.id).toList();
+      for (var item in resp) {
+        if (!daysIds.contains(item.data['boxid'])) {
+          _pb.collection('days').delete(item.id);
+        }
+      }
+
+      //sync settings to server
       var id = await _pb.collection('settings').getFullList().then((value) =>
           value
-              .where((element) => element.data['title'] == 'syncdate')
+              .where((element) => element.data['title'] == 'dailyplustitles')
               .first
               .id);
+      _pb.collection('settings').update(id, body: <String, dynamic>{
+        'title': 'dailyplustitles',
+        'value': Encryption.encryptStringWithPassword(
+            c.settings.value.dailyPlusTitles.toString(),
+            c.settings.value.password)
+      });
+
+      id = await _pb.collection('settings').getFullList().then((value) => value
+          .where((element) => element.data['title'] == 'dailyminustitles')
+          .first
+          .id);
+      _pb.collection('settings').update(id, body: <String, dynamic>{
+        'title': 'dailyminustitles',
+        'value': Encryption.encryptStringWithPassword(
+            c.settings.value.dailyMinusTitles.toString(),
+            c.settings.value.password)
+      });
+
+      id = await _pb.collection('settings').getFullList().then((value) => value
+          .where((element) => element.data['title'] == 'syncdate')
+          .first
+          .id);
       _pb.collection('settings').update(id, body: <String, dynamic>{
         'title': 'syncdate',
         'value': DateTime.now().subtract(const Duration(minutes: 1)).toString()
@@ -228,6 +255,29 @@ class Database {
         objectBox.todosBox.remove(item.id);
       }
     }
+    // sync settings
+    var s1 = await _pb.collection('settings').getFullList().then((value) =>
+        value
+            .where((element) => element.data['title'] == 'dailyplustitles')
+            .first);
+    c.settings.value.dailyPlusTitles = (Encryption.decryptStringWithPassword(
+            s1.data['value'], c.settings.value.password))
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .split(',')
+        .map((e) => e.trim())
+        .toList();
+
+    s1 = await _pb.collection('settings').getFullList().then((value) => value
+        .where((element) => element.data['title'] == 'dailyminustitles')
+        .first);
+    c.settings.value.dailyMinusTitles = (Encryption.decryptStringWithPassword(
+            s1.data['value'], c.settings.value.password))
+        .replaceAll('[', '')
+        .replaceAll(']', '')
+        .split(',')
+        .map((e) => e.trim())
+        .toList();
   }
 
   Future<void> initialSync(
@@ -299,6 +349,20 @@ class Database {
       "user": record.id
     };
     await _pb.collection('settings').create(body: body2);
+    final body3 = <String, dynamic>{
+      "title": "dailyplustitles",
+      "value": Encryption.encryptStringWithPassword(
+          '[+Task1, +Task2, +Task3]', password),
+      "user": record.id
+    };
+    await _pb.collection('settings').create(body: body3);
+    final body4 = <String, dynamic>{
+      "title": "dailyminustitles",
+      "value": Encryption.encryptStringWithPassword(
+          '[-Task1, -Task2, -Task3]', password),
+      "user": record.id
+    };
+    await _pb.collection('settings').create(body: body4);
     await _pb.collection('users').requestVerification(email);
     await objectBox.dayBox.removeAllAsync();
     await objectBox.todosBox.removeAllAsync();

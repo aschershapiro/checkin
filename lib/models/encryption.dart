@@ -6,7 +6,7 @@ import 'package:encrypt/encrypt.dart';
 
 class Encryption {
   static String encryptStringWithPassword(String text, String password) {
-    if (password == '') return text;
+    if (password == '' || text == '') return text;
     final key = sha256.convert(utf8.encode(password)).bytes;
     final iv = List<int>.generate(16, (_) => 0); // Initialization vector
     final encrypter = Encrypter(AES(Key(Uint8List.fromList(key))));
@@ -16,7 +16,7 @@ class Encryption {
 
   static String decryptStringWithPassword(
       String encryptedText, String password) {
-    if (password == '') return encryptedText;
+    if (password == '' || encryptedText == '') return encryptedText;
     final key = sha256.convert(utf8.encode(password)).bytes;
     final iv = List<int>.generate(16, (_) => 0); // Initialization vector
     final encrypter = Encrypter(AES(Key(Uint8List.fromList(key))));

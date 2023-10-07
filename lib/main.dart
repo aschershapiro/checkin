@@ -14,14 +14,13 @@ final database = Database();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
-  //objectBox.dayBox.removeAll();
   c = Get.put(Controller());
   await database.autoLogin();
 
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Checkin',
-    home: database.isAuth ? TodoListPage() : const LoginPage(),
+    home: database.isAuth ? const SplashScreen() : const LoginPage(),
     //initialRoute: '/todolist',
     getPages: appRoutes,
     theme: ThemeData(primarySwatch: Colors.blue),

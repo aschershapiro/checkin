@@ -17,6 +17,7 @@ class Settings {
   var userId = '';
   var userToken = '';
   var password = '';
+  var username = '';
   Settings();
 }
 

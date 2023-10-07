@@ -51,7 +51,7 @@ class DailyPlusPage extends StatelessWidget {
         ),
         appBar: AppBar(
           toolbarHeight: 50,
-          title: Text('Habit tracker for good habits'),
+          title: Text('Good habits'),
           actions: [
             Obx(
               () => Visibility(
