@@ -23,6 +23,6 @@ Future<void> main() async {
     home: database.isAuth ? const SplashScreen() : const LoginPage(),
     //initialRoute: '/todolist',
     getPages: appRoutes,
-    theme: ThemeData(primarySwatch: Colors.blue),
+    theme: ThemeData(colorSchemeSeed: Colors.blue, useMaterial3: true),
   ));
 }

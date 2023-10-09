@@ -1,5 +1,5 @@
 import 'package:checkin/main.dart';
-import 'package:checkin/models/drawer.dart';
+import 'package:checkin/views/drawer.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

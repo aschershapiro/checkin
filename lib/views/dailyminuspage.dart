@@ -1,8 +1,8 @@
 import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
-import 'package:checkin/models/bottomnavigaionbar.dart';
+import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/models/day.dart';
-import 'package:checkin/models/drawer.dart';
+import 'package:checkin/views/drawer.dart';
 import 'package:checkin/routes.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newdailydialog.dart';
@@ -16,7 +16,7 @@ class DailyMinusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(primarySwatch: Colors.red),
+      data: ThemeData(colorSchemeSeed: Colors.red, useMaterial3: true),
       child: Scaffold(
         drawer: const DrawerWidget(),
         appBar: AppBar(

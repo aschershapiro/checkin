@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
                   autofocus: true,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                    labelText: 'Username or Email',
                   ),
                   onChanged: (value) {
                     c.username.value = value;
