@@ -17,47 +17,52 @@ class PieChartWidgetState extends State {
   List<int> values;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(title,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        ),
-        SizedBox(
-          width: 200.0,
-          height: 200.0,
-          child: PieChart(
-            PieChartData(
-              pieTouchData: PieTouchData(
-                touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                  setState(() {
-                    if (!event.isInterestedForInteractions ||
-                        pieTouchResponse == null ||
-                        pieTouchResponse.touchedSection == null) {
-                      touchedIndex = -1;
-                      return;
-                    }
-                    touchedIndex =
-                        pieTouchResponse.touchedSection!.touchedSectionIndex;
-                  });
-                },
-              ),
-              borderData: FlBorderData(
-                show: false,
-              ),
-              sectionsSpace: 0,
-              centerSpaceRadius: 0,
-              sections: showingSections(
-                  positive: values[0].toDouble(),
-                  neutral: values[1].toDouble(),
-                  negative: values[2].toDouble(),
-                  none: values[3].toDouble()),
+    return Card(
+      child: Row(
+        children: [
+          SizedBox(
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16)),
             ),
           ),
-        ),
-      ],
+          SizedBox(
+            width: 200.0,
+            height: 170.0,
+            child: PieChart(
+              PieChartData(
+                pieTouchData: PieTouchData(
+                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                    setState(() {
+                      if (!event.isInterestedForInteractions ||
+                          pieTouchResponse == null ||
+                          pieTouchResponse.touchedSection == null) {
+                        touchedIndex = -1;
+                        return;
+                      }
+                      touchedIndex =
+                          pieTouchResponse.touchedSection!.touchedSectionIndex;
+                    });
+                  },
+                ),
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                sectionsSpace: 0,
+                centerSpaceRadius: 0,
+                sections: showingSections(
+                    positive: values[0].toDouble(),
+                    neutral: values[1].toDouble(),
+                    negative: values[2].toDouble(),
+                    none: values[3].toDouble()),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -67,6 +72,7 @@ class PieChartWidgetState extends State {
       required double negative,
       required double none}) {
     double total = positive + negative + neutral + none;
+    var length = 4;
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;

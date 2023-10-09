@@ -1,6 +1,8 @@
 import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
+import 'package:checkin/models/bottomnavigaionbar.dart';
 import 'package:checkin/models/day.dart';
+import 'package:checkin/models/drawer.dart';
 import 'package:checkin/routes.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newdailydialog.dart';
@@ -16,39 +18,7 @@ class DailyMinusPage extends StatelessWidget {
     return Theme(
       data: ThemeData(primarySwatch: Colors.red),
       child: Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Checkin 0.1b\n${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} \nID: ${c.settings.value.userId}',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-              ListTile(
-                title: const Text('Log out'),
-                leading: const Icon(Icons.logout),
-                onTap: () {
-                  database.logout();
-                  Get.off(() => const LoginPage());
-                },
-              ),
-              ListTile(
-                title: const Text('Settings'),
-                leading: const Icon(Icons.settings),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: const DrawerWidget(),
         appBar: AppBar(
           toolbarHeight: 50,
           title: const Text('Bad habits'),
@@ -83,33 +53,7 @@ class DailyMinusPage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: Obx(
-          () => NavigationBar(
-            selectedIndex: c.pagecounter.value,
-            onDestinationSelected: (value) {
-              c.pagecounter.value = value;
-              Get.toNamed(appRoutes[value].name);
-            },
-            destinations: const <Widget>[
-              NavigationDestination(
-                  icon: Icon(Icons.checklist_outlined),
-                  selectedIcon: Icon(Icons.checklist),
-                  label: 'To Do'),
-              NavigationDestination(
-                  icon: Icon(Icons.plus_one_outlined),
-                  selectedIcon: Icon(Icons.plus_one),
-                  label: 'Daily +'),
-              NavigationDestination(
-                  icon: Icon(Icons.exposure_minus_1_outlined),
-                  selectedIcon: Icon(Icons.exposure_minus_1),
-                  label: 'Daily -'),
-              NavigationDestination(
-                  icon: Icon(Icons.summarize_outlined),
-                  selectedIcon: Icon(Icons.summarize),
-                  label: 'Report'),
-            ],
-          ),
-        ),
+        bottomNavigationBar: const BottomBar(),
         body: Obx(() => DailyMinusWidget(tasks: c.today.taskMinusList.value)),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
