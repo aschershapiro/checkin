@@ -2,9 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieChartWidget extends StatefulWidget {
-  PieChartWidget({super.key, required this.title, required this.values});
-  List<int> values;
-  String title;
+  const PieChartWidget({super.key, required this.title, required this.values});
+  final List<int> values;
+  final String title;
   @override
   State<StatefulWidget> createState() =>
       PieChartWidgetState(values: values, title: title);
@@ -21,7 +21,7 @@ class PieChartWidgetState extends State {
       child: Row(
         children: [
           SizedBox(
-            width: 300,
+            width: 200,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(title,
@@ -71,8 +71,8 @@ class PieChartWidgetState extends State {
       required double neutral,
       required double negative,
       required double none}) {
-    double total = positive + negative + neutral + none;
-    var length = 4;
+    // double total = positive + negative + neutral + none;
+    // var length = 4;
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 20.0 : 16.0;

@@ -35,7 +35,9 @@ Future<DailyTask?> newDailyDialog() {
         width: 100,
         child: TextButton(
           onPressed: () {
-            taskTitle.isNotEmpty ? Get.back(result: DailyTask(title: taskTitle)) : Get.back();
+            taskTitle.isNotEmpty
+                ? Get.back(result: DailyTask(title: taskTitle))
+                : Get.back();
           },
           child: const Text('OK'),
         ),

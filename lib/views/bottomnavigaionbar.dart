@@ -23,11 +23,11 @@ class BottomBar extends StatelessWidget {
           NavigationDestination(
               icon: Icon(Icons.plus_one_outlined),
               selectedIcon: Icon(Icons.plus_one),
-              label: 'Daily +'),
+              label: 'Good Habits'),
           NavigationDestination(
               icon: Icon(Icons.exposure_minus_1_outlined),
               selectedIcon: Icon(Icons.exposure_minus_1),
-              label: 'Daily -'),
+              label: 'Bad Habits'),
           NavigationDestination(
               icon: Icon(Icons.summarize_outlined),
               selectedIcon: Icon(Icons.summarize),

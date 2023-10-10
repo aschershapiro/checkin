@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/encryption.dart';
 import 'package:intl/intl.dart';
@@ -22,9 +21,9 @@ class Reports {
     var availableDates = <String>[];
     var dateSpan = <String>[];
     if (label == 'dailyplus') {
-      tasks = c.today.taskPlusList.value.map((e) => e.title).toList();
+      tasks = c.today.taskPlusList.map((e) => e.title).toList();
     } else if (label == 'dailyminus') {
-      tasks = c.today.taskMinusList.value.map((e) => e.title).toList();
+      tasks = c.today.taskMinusList.map((e) => e.title).toList();
     }
     var resp = await database.getAllDays();
     dateSpan = _getDaysBetween(init, end);

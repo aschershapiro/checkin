@@ -1,8 +1,6 @@
 import 'package:checkin/main.dart';
 import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/views/drawer.dart';
-import 'package:checkin/routes.dart';
-import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newtodotaskdialog.dart';
 import 'package:checkin/views/todolistwidget.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +11,6 @@ class TodoListPage extends StatelessWidget {
     _init();
   }
   void _init() async {}
-
-  @override
-
-  //late final Controller c;
 
   @override
   Widget build(BuildContext context) {

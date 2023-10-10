@@ -1,5 +1,4 @@
 import 'package:checkin/controllers/controllers.dart';
-import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:flutter/material.dart';

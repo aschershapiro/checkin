@@ -1,7 +1,6 @@
 import 'package:checkin/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:checkin/database/database.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class LoginPage extends StatelessWidget {

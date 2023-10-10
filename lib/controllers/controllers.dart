@@ -22,6 +22,9 @@ class Controller extends GetxController {
   var password_signup = ''.obs;
   var email_signup = ''.obs;
   var password_c_signup = ''.obs;
+  var reportInitDate = DateTime(2023).obs;
+  var reportEndDate = DateTime.now().obs;
+  var reportVisible = false.obs;
   Controller() {
     settings.value = objectBox.settingsBox.getAll().firstOrNull ?? Settings();
   }

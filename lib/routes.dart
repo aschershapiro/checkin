@@ -28,7 +28,7 @@ List<GetPage<dynamic>> appRoutes = [
   ),
   GetPage(
     name: '/report',
-    page: () => const ReportPage(),
+    page: () => ReportPage(),
     middlewares: [MyMiddelware()],
     transition: Transition.fadeIn,
     transitionDuration: const Duration(milliseconds: 200),

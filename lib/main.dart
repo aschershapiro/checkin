@@ -4,7 +4,6 @@ import 'package:checkin/objectbox.dart';
 import 'package:checkin/controllers/controllers.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/splashscreen.dart';
-import 'package:checkin/views/todolistpage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

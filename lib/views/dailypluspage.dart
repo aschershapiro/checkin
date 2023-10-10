@@ -1,11 +1,8 @@
-import 'package:checkin/database/database.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/views/drawer.dart';
-import 'package:checkin/routes.dart';
 import 'package:checkin/views/dailypluswidget.dart';
-import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/newdailydialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

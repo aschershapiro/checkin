@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()

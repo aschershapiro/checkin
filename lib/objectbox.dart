@@ -1,4 +1,3 @@
-import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
