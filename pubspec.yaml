@@ -46,6 +46,7 @@ dependencies:
   fl_chart: ^0.63.0
   crypto: ^3.0.3
   encrypt: ^5.0.1
+  flutter_heatmap_calendar: ^1.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

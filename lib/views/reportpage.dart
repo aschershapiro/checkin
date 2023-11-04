@@ -3,6 +3,7 @@ import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/views/datepickerwidget.dart';
 import 'package:checkin/views/drawer.dart';
 import 'package:checkin/views/reportduration.dart';
+import 'package:checkin/views/reportoverview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,10 +18,9 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget x = Container();
     return Obx(() => DefaultTabController(
           initialIndex: 0,
-          length: 3,
+          length: 4,
           child: Scaffold(
             bottomNavigationBar: const BottomBar(),
             drawer: const DrawerWidget(),
@@ -28,6 +28,9 @@ class ReportPage extends StatelessWidget {
               toolbarHeight: 50,
               title: const Text('Reports'),
               bottom: const TabBar(tabs: <Widget>[
+                Tab(
+                  text: 'Overview',
+                ),
                 Tab(
                   text: 'Last week',
                 ),
@@ -39,6 +42,7 @@ class ReportPage extends StatelessWidget {
             ),
             body: TabBarView(
               children: <Widget>[
+                ReportOverview(),
                 SingleChildScrollView(
                   child: DurationReport(
                     startDate: DateTime.now().subtract(const Duration(days: 6)),
@@ -76,7 +80,6 @@ class ReportPage extends StatelessWidget {
                             width: 200,
                             child: TextButton(
                                 onPressed: () {
-                                  x = Container();
                                   c.reportInitDate.value = initialDate
                                           .dateTime ??
                                       DateTime.now()
@@ -84,14 +87,15 @@ class ReportPage extends StatelessWidget {
                                   c.reportEndDate.value =
                                       endDate.dateTime ?? DateTime.now();
                                   c.reportVisible.toggle();
-                                  x = DurationReport(
-                                    startDate: c.reportInitDate.value,
-                                    endDate: c.reportEndDate.value,
-                                  );
                                 },
                                 child: const Text('Submit'))),
                       ),
-                      x,
+                      c.reportVisible.value
+                          ? DurationReport(
+                              startDate: c.reportInitDate.value,
+                              endDate: c.reportEndDate.value,
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

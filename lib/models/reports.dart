@@ -14,6 +14,16 @@ class Reports {
     return days;
   }
 
+  Future<List<DateTime>> checkedDaysReport() async {
+    var resp = await database.getAllDays();
+    var availableDates = <DateTime>[];
+    for (var element in resp) {
+      availableDates.add(DateTime.parse(
+          (element.data['date'] as String).substring(0, 10).trim()));
+    }
+    return availableDates;
+  }
+
   Future<List<TaskReport>> dailyReport(
       DateTime init, DateTime end, String label) async {
     List<TaskReport> ls = List<TaskReport>.empty(growable: true);

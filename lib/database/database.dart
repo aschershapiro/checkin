@@ -64,12 +64,12 @@ class Database {
         }
       }
       //delete
-      // var boxIds = boxItems.map((e) => e.id).toList();
-      // for (var item in resp) {
-      //   if (!boxIds.contains(item.data['boxid'])) {
-      //     _pb.collection('todo_items').delete(item.id);
-      //   }
-      // }
+      var boxIds = boxItems.map((e) => e.id).toList();
+      for (var item in resp) {
+        if (!boxIds.contains(item.data['boxid'])) {
+          _pb.collection('todo_items').delete(item.id);
+        }
+      }
 
       // sync day from box to server
       resp = await _pb.collection('days').getFullList();
