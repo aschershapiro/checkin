@@ -21,13 +21,23 @@ fully open-souce with no paywalls
 
 ## Dependencies:
   get
+  
   objectbox
+  
   objectbox_flutter_libs
+  
   path
+  
   path_provider
-  intl: any
+  
+  intl
+  
   pocketbase
+  
   fl_chart
+  
   crypto
+  
   encrypt
+  
   flutter_heatmap_calendar
