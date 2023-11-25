@@ -9,7 +9,7 @@ works both offline and online
 fully open-souce with no paywalls
 
 ## Limitations
-! currently does not support web do to use of Objectbox for local database.
+! currently does not support web due to use of Objectbox for local database.
 
 ## Future features
 1. Detailed reports
@@ -21,15 +21,23 @@ fully open-souce with no paywalls
 
 ## Dependencies:
   get
-
+  
   objectbox
-
+  
   objectbox_flutter_libs
-
+  
   path
-
+  
   path_provider
-
-  intl: any
+  
+  intl
   
   pocketbase
+  
+  fl_chart
+  
+  crypto
+  
+  encrypt
+  
+  flutter_heatmap_calendar
