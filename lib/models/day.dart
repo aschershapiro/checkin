@@ -9,6 +9,9 @@ import 'package:objectbox/objectbox.dart';
 class Day {
   var taskPlusList = <DailyTask>[].obs;
   var taskMinusList = <DailyTask>[].obs;
+  var mood = ''.obs;
+  var summary = ''.obs;
+  var thanksgiving = ''.obs;
   late final String date;
   Day(this.date) {
     for (var element in c.settings.value.dailyPlusTitles) {
@@ -23,6 +26,9 @@ class Day {
       var mapPlus = jsonDecode(db.plusJsonString);
       var mapMinus = jsonDecode(db.minusJsonString);
       date = db.date;
+      mood.value = db.mood;
+      summary.value = db.summary;
+      thanksgiving.value = db.thanksgiving;
       mapPlus.forEach((key, value) {
         taskPlusList.add(DailyTask(title: key)
           ..condition.value = dailyCondition(int.tryParse(value) ?? 3));
@@ -52,8 +58,14 @@ class DayBox {
 
   String plusJsonString = '';
   String minusJsonString = '';
+  String mood = '';
+  String summary = '';
+  String thanksgiving = '';
   void toJson(Day day) {
     date = day.date;
+    mood = day.mood.value;
+    summary = day.summary.value;
+    thanksgiving = day.thanksgiving.value;
     var taskPlusMap = <String, String>{};
     var taskMinusMap = <String, String>{};
     for (var element in day.taskPlusList) {

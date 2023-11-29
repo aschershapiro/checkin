@@ -53,7 +53,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(2, 5955013199925436597),
       name: 'DayBox',
-      lastPropertyId: const IdUid(5, 3486768794814305000),
+      lastPropertyId: const IdUid(8, 7462729744182255769),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -76,6 +76,21 @@ final _entities = <ModelEntity>[
             id: const IdUid(5, 3486768794814305000),
             name: 'minusJsonString',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 1218331339918777171),
+            name: 'mood',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 9095340803820705059),
+            name: 'summary',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 7462729744182255769),
+            name: 'thanksgiving',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -83,7 +98,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 8950029361012055698),
       name: 'Settings',
-      lastPropertyId: const IdUid(8, 8629639524485182754),
+      lastPropertyId: const IdUid(9, 2606502857583225965),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -120,6 +135,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(8, 8629639524485182754),
             name: 'dailyMinusTitles',
             type: 30,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 2606502857583225965),
+            name: 'username',
+            type: 9,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -213,11 +233,17 @@ ModelDefinition getObjectBoxModel() {
           final dateOffset = fbb.writeString(object.date);
           final plusJsonStringOffset = fbb.writeString(object.plusJsonString);
           final minusJsonStringOffset = fbb.writeString(object.minusJsonString);
-          fbb.startTable(6);
+          final moodOffset = fbb.writeString(object.mood);
+          final summaryOffset = fbb.writeString(object.summary);
+          final thanksgivingOffset = fbb.writeString(object.thanksgiving);
+          fbb.startTable(9);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, dateOffset);
           fbb.addOffset(3, plusJsonStringOffset);
           fbb.addOffset(4, minusJsonStringOffset);
+          fbb.addOffset(5, moodOffset);
+          fbb.addOffset(6, summaryOffset);
+          fbb.addOffset(7, thanksgivingOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -232,7 +258,13 @@ ModelDefinition getObjectBoxModel() {
             ..plusJsonString = const fb.StringReader(asciiOptimization: true)
                 .vTableGet(buffer, rootOffset, 10, '')
             ..minusJsonString = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 12, '');
+                .vTableGet(buffer, rootOffset, 12, '')
+            ..mood = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 14, '')
+            ..summary = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 16, '')
+            ..thanksgiving = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 18, '');
 
           return object;
         }),
@@ -254,7 +286,8 @@ ModelDefinition getObjectBoxModel() {
           final dailyMinusTitlesOffset = fbb.writeList(object.dailyMinusTitles
               .map(fbb.writeString)
               .toList(growable: false));
-          fbb.startTable(9);
+          final usernameOffset = fbb.writeString(object.username);
+          fbb.startTable(10);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
           fbb.addOffset(3, userIdOffset);
@@ -262,6 +295,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(5, passwordOffset);
           fbb.addOffset(6, dailyPlusTitlesOffset);
           fbb.addOffset(7, dailyMinusTitlesOffset);
+          fbb.addOffset(8, usernameOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -286,7 +320,9 @@ ModelDefinition getObjectBoxModel() {
             ..dailyMinusTitles = const fb.ListReader<String>(
                     fb.StringReader(asciiOptimization: true),
                     lazy: false)
-                .vTableGet(buffer, rootOffset, 18, []);
+                .vTableGet(buffer, rootOffset, 18, [])
+            ..username = const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 20, '');
 
           return object;
         })
@@ -327,6 +363,17 @@ class DayBox_ {
   /// see [DayBox.minusJsonString]
   static final minusJsonString =
       QueryStringProperty<DayBox>(_entities[1].properties[3]);
+
+  /// see [DayBox.mood]
+  static final mood = QueryStringProperty<DayBox>(_entities[1].properties[4]);
+
+  /// see [DayBox.summary]
+  static final summary =
+      QueryStringProperty<DayBox>(_entities[1].properties[5]);
+
+  /// see [DayBox.thanksgiving]
+  static final thanksgiving =
+      QueryStringProperty<DayBox>(_entities[1].properties[6]);
 }
 
 /// [Settings] entity fields to define ObjectBox queries.
@@ -357,4 +404,8 @@ class Settings_ {
   /// see [Settings.dailyMinusTitles]
   static final dailyMinusTitles =
       QueryStringVectorProperty<Settings>(_entities[2].properties[6]);
+
+  /// see [Settings.username]
+  static final username =
+      QueryStringProperty<Settings>(_entities[2].properties[7]);
 }

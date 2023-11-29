@@ -1,5 +1,8 @@
 import 'package:checkin/main.dart';
+import 'package:checkin/models/reports.dart';
+import 'package:checkin/views/historypage.dart';
 import 'package:checkin/views/loginpage.dart';
+import 'package:checkin/views/reportpage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +24,20 @@ class DrawerWidget extends StatelessWidget {
               'Checkin 0.1b\n${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} \nID: ${c.settings.value.userId}',
               style: const TextStyle(color: Colors.white),
             ),
+          ),
+          ListTile(
+            title: const Text('Trends'),
+            leading: const Icon(Icons.summarize),
+            onTap: () {
+              Get.to(() => ReportPage());
+            },
+          ),
+          ListTile(
+            title: const Text('History'),
+            leading: const Icon(Icons.history),
+            onTap: () {
+              Get.to(() => HistoryPage());
+            },
           ),
           ListTile(
             title: const Text('Log out'),

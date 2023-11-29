@@ -93,6 +93,12 @@ class Database {
                 item.plusJsonString, c.settings.value.password),
             'dailyminus': Encryption.encryptStringWithPassword(
                 item.minusJsonString, c.settings.value.password),
+            'mood': Encryption.encryptStringWithPassword(
+                item.mood, c.settings.value.password),
+            'summary': Encryption.encryptStringWithPassword(
+                item.summary, c.settings.value.password),
+            'thanksgiving': Encryption.encryptStringWithPassword(
+                item.thanksgiving, c.settings.value.password),
             'boxid': item.id,
             'user': _pb.authStore.model is String
                 ? _pb.authStore.model
@@ -108,6 +114,12 @@ class Database {
                 item.plusJsonString, c.settings.value.password),
             'dailyminus': Encryption.encryptStringWithPassword(
                 item.minusJsonString, c.settings.value.password),
+            'mood': Encryption.encryptStringWithPassword(
+                item.mood, c.settings.value.password),
+            'summary': Encryption.encryptStringWithPassword(
+                item.summary, c.settings.value.password),
+            'thanksgiving': Encryption.encryptStringWithPassword(
+                item.thanksgiving, c.settings.value.password),
             'boxid': item.id,
             'user': _pb.authStore.model is String
                 ? _pb.authStore.model
@@ -163,10 +175,9 @@ class Database {
     }
   }
 
-  Future<void> syncServer2Box(
-      {required ObjectBox objectBox, required PocketBase pocketBase}) async {
+  Future<void> syncServer2Box({required ObjectBox objectBox}) async {
     //sync todos from server to box
-    var resp = await pocketBase.collection('todo_items').getFullList();
+    var resp = await _pb.collection('todo_items').getFullList();
     var boxItems = objectBox.todosBox.getAll();
     for (var item in resp) {
       var contains = boxItems.fold(
@@ -213,7 +224,7 @@ class Database {
     }
 
     // sync days from server to box
-    resp = await pocketBase.collection('days').getFullList();
+    resp = await _pb.collection('days').getFullList();
     var boxdays = objectBox.dayBox.getAll();
     for (var item in resp) {
       var contains = boxdays.fold(
@@ -231,7 +242,13 @@ class Database {
           ..minusJsonString = Encryption.decryptStringWithPassword(
               item.data['dailyminus'].toString(), c.settings.value.password)
           ..plusJsonString = Encryption.decryptStringWithPassword(
-              item.data['dailyplus'].toString(), c.settings.value.password);
+              item.data['dailyplus'].toString(), c.settings.value.password)
+          ..mood = Encryption.decryptStringWithPassword(
+              item.data['mood'].toString(), c.settings.value.password)
+          ..summary = Encryption.decryptStringWithPassword(
+              item.data['summary'].toString(), c.settings.value.password)
+          ..thanksgiving = Encryption.decryptStringWithPassword(
+              item.data['thanksgiving'].toString(), c.settings.value.password);
         objectBox.dayBox.put(dayBox, mode: PutMode.update);
       }
       // create
@@ -244,7 +261,13 @@ class Database {
           ..minusJsonString = Encryption.decryptStringWithPassword(
               item.data['dailyminus'].toString(), c.settings.value.password)
           ..plusJsonString = Encryption.decryptStringWithPassword(
-              item.data['dailyplus'].toString(), c.settings.value.password);
+              item.data['dailyplus'].toString(), c.settings.value.password)
+          ..mood = Encryption.decryptStringWithPassword(
+              item.data['mood'].toString(), c.settings.value.password)
+          ..summary = Encryption.decryptStringWithPassword(
+              item.data['summary'].toString(), c.settings.value.password)
+          ..thanksgiving = Encryption.decryptStringWithPassword(
+              item.data['thanksgiving'].toString(), c.settings.value.password);
         objectBox.dayBox.put(dayBox, mode: PutMode.put);
       }
     }
@@ -289,7 +312,7 @@ class Database {
             .toString());
     var serverDate = DateTime.parse(aaa);
     if (serverDate.isAfter(settings.boxDate)) {
-      await syncServer2Box(objectBox: objectBox, pocketBase: _pb);
+      await syncServer2Box(objectBox: objectBox);
     } else if (isAuth) {
       try {
         syncBox2Server(objectBox: objectBox);

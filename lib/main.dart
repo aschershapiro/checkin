@@ -12,13 +12,14 @@ import 'dart:io' show Platform;
 late final Controller c;
 late ObjectBox objectBox;
 final database = Database();
-var notif = LocalNotificationService();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectBox = await ObjectBox.create();
   c = Get.put(Controller());
   await database.autoLogin();
   if (Platform.isAndroid) {
+    var notif = LocalNotificationService();
     await notif.init();
     await notif.scheduleWeeklyTenPMNotification();
   }

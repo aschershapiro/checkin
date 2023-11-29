@@ -22,8 +22,7 @@ class ReportPage extends StatelessWidget {
           initialIndex: 0,
           length: 4,
           child: Scaffold(
-            bottomNavigationBar: const BottomBar(),
-            drawer: const DrawerWidget(),
+            // drawer: const DrawerWidget(),
             appBar: AppBar(
               toolbarHeight: 50,
               title: const Text('Reports'),

@@ -1,5 +1,6 @@
 import 'package:checkin/views/dailyminuspage.dart';
 import 'package:checkin/views/dailypluspage.dart';
+import 'package:checkin/views/moodtrackerpage.dart';
 import 'package:checkin/views/reportpage.dart';
 import 'package:checkin/views/signuppage.dart';
 import 'package:checkin/views/todolistpage.dart';
@@ -22,6 +23,13 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(
     name: '/dailyminus',
     page: () => const DailyMinusPage(),
+    middlewares: [MyMiddelware()],
+    transition: Transition.fadeIn,
+    transitionDuration: const Duration(milliseconds: 200),
+  ),
+  GetPage(
+    name: '/mood',
+    page: () => MoodTrackerPage(),
     middlewares: [MyMiddelware()],
     transition: Transition.fadeIn,
     transitionDuration: const Duration(milliseconds: 200),

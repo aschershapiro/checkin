@@ -1,52 +1,40 @@
+import 'package:checkin/main.dart';
+import 'package:checkin/models/notification.dart';
+import 'package:checkin/views/bottomnavigaionbar.dart';
+import 'package:checkin/views/drawer.dart';
+import 'package:checkin/views/moodtrackerwidget.dart';
+import 'package:checkin/views/newtodotaskdialog.dart';
+import 'package:checkin/views/todolistwidget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class MoodTrackingWidget extends StatefulWidget {
-  @override
-  _MoodTrackingWidgetState createState() => _MoodTrackingWidgetState();
-}
-
-class _MoodTrackingWidgetState extends State<MoodTrackingWidget> {
-  String selectedMood = '';
+class MoodTrackerPage extends StatelessWidget {
+  MoodTrackerPage({super.key}) {
+    _init();
+  }
+  void _init() async {}
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'How are you feeling today?',
-          style: TextStyle(fontSize: 18),
+    // todosBox.putMany(todos);
+    return Theme(
+      data: ThemeData(colorSchemeSeed: Colors.yellow, useMaterial3: true),
+      child: Scaffold(
+        drawer: const DrawerWidget(),
+        appBar: AppBar(
+          toolbarHeight: 50,
+          title: const Text('Mood'),
         ),
-        SizedBox(height: 16),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildMoodIcon('😃', 'Happy'),
-            buildMoodIcon('😐', 'Neutral'),
-            buildMoodIcon('😔', 'Sad'),
-          ],
-        ),
-        SizedBox(height: 16),
-        Text(
-          'Selected mood: $selectedMood',
-          style: TextStyle(fontSize: 16),
-        ),
-      ],
-    );
-  }
-
-  Widget buildMoodIcon(String icon, String mood) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedMood = mood;
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          icon,
-          style: TextStyle(fontSize: 30),
+        bottomNavigationBar: const BottomBar(),
+        body: Container(
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: ColoredBox(
+            color: Colors.green,
+            child: Material(
+              child: MoodTrackingWidget(),
+            ),
+          ),
         ),
       ),
     );

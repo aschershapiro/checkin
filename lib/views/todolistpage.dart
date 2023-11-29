@@ -1,5 +1,4 @@
 import 'package:checkin/main.dart';
-import 'package:checkin/models/notification.dart';
 import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/views/drawer.dart';
 import 'package:checkin/views/newtodotaskdialog.dart';

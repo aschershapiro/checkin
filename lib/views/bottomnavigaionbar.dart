@@ -29,9 +29,9 @@ class BottomBar extends StatelessWidget {
               selectedIcon: Icon(Icons.exposure_minus_1),
               label: 'Bad Habits'),
           NavigationDestination(
-              icon: Icon(Icons.summarize_outlined),
-              selectedIcon: Icon(Icons.summarize),
-              label: 'Report'),
+              icon: Icon(Icons.mood_outlined),
+              selectedIcon: Icon(Icons.mood),
+              label: 'Mood'),
         ],
       ),
     );

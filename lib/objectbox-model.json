@@ -34,7 +34,7 @@
     },
     {
       "id": "2:5955013199925436597",
-      "lastPropertyId": "5:3486768794814305000",
+      "lastPropertyId": "8:7462729744182255769",
       "name": "DayBox",
       "properties": [
         {
@@ -59,13 +59,28 @@
           "id": "5:3486768794814305000",
           "name": "minusJsonString",
           "type": 9
+        },
+        {
+          "id": "6:1218331339918777171",
+          "name": "mood",
+          "type": 9
+        },
+        {
+          "id": "7:9095340803820705059",
+          "name": "summary",
+          "type": 9
+        },
+        {
+          "id": "8:7462729744182255769",
+          "name": "thanksgiving",
+          "type": 9
         }
       ],
       "relations": []
     },
     {
       "id": "3:8950029361012055698",
-      "lastPropertyId": "8:8629639524485182754",
+      "lastPropertyId": "9:2606502857583225965",
       "name": "Settings",
       "properties": [
         {
@@ -103,6 +118,11 @@
           "id": "8:8629639524485182754",
           "name": "dailyMinusTitles",
           "type": 30
+        },
+        {
+          "id": "9:2606502857583225965",
+          "name": "username",
+          "type": 9
         }
       ],
       "relations": []
