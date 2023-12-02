@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(
-        title: const Center(child: Text("Welcome back!")),
+        title: Center(child: Text("welcomeBack".tr)),
       ),
       body: Center(
         child: SizedBox(
@@ -30,9 +30,9 @@ class SplashScreen extends StatelessWidget {
                     width: 300,
                     child: TextField(
                       autofocus: true,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Password',
+                        labelText: 'password'.tr,
                       ),
                       obscureText: true,
                       onChanged: (value) {
@@ -52,9 +52,9 @@ class SplashScreen extends StatelessWidget {
                           Get.offAndToNamed('/todolist');
                         } else {
                           Get.showSnackbar(
-                            const GetSnackBar(
-                              title: 'Error',
-                              message: "Incorrect Password!",
+                            GetSnackBar(
+                              title: 'error'.tr,
+                              message: "incorrectPassword".tr,
                               icon: Icon(Icons.error, color: Colors.red),
                               duration: Duration(seconds: 4),
                             ),
@@ -66,7 +66,7 @@ class SplashScreen extends StatelessWidget {
 
                         Get.showSnackbar(
                           GetSnackBar(
-                            title: 'Error',
+                            title: 'error'.tr,
                             message: resp.toString(),
                             icon: const Icon(Icons.error, color: Colors.red),
                             duration: const Duration(seconds: 4),

@@ -1,4 +1,9 @@
+import 'package:get/get.dart';
 import 'package:objectbox/objectbox.dart';
+
+enum Languages { persian, english }
+
+enum DailyCondition { positive, neutral, negative, none }
 
 @Entity()
 class Settings {
@@ -17,10 +22,25 @@ class Settings {
   var userToken = '';
   var password = '';
   var username = '';
+  @Transient()
+  var language = Languages.english.obs;
+
+  int? get dbLanguage {
+    return language.value.index;
+  }
+
+  set dbLanguage(int? value) {
+    if (value == null) {
+      language.value = Languages.english;
+    } else {
+      language.value = value >= 0 && value < Languages.values.length
+          ? Languages.values[value]
+          : Languages.english;
+    }
+  }
+
   Settings();
 }
-
-enum DailyCondition { positive, neutral, negative, none }
 
 DailyCondition dailyCondition(int value) {
   switch (value) {

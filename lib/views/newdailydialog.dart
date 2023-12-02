@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 Future<DailyTask?> newDailyDialog() {
   var taskTitle = '';
   return Get.defaultDialog<DailyTask?>(
-    title: 'Add new Task',
+    title: 'addNewTask'.tr,
     backgroundColor: Colors.white,
     content: SizedBox(
       width: 600,
@@ -15,9 +15,9 @@ Future<DailyTask?> newDailyDialog() {
         onChanged: (value) {
           taskTitle = value;
         },
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: 'New Task',
+          labelText: 'newTask'.tr,
         ),
       ),
     ),
@@ -28,7 +28,7 @@ Future<DailyTask?> newDailyDialog() {
           onPressed: () {
             return Get.back();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ),
       SizedBox(
@@ -39,7 +39,7 @@ Future<DailyTask?> newDailyDialog() {
                 ? Get.back(result: DailyTask(title: taskTitle))
                 : Get.back();
           },
-          child: const Text('OK'),
+          child: Text('ok'.tr),
         ),
       ),
     ],

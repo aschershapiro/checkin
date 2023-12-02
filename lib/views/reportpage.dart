@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 class ReportPage extends StatelessWidget {
   ReportPage({super.key});
   final initialDate = DatePickerTextField(
-    label: 'Initial Date',
+    label: 'initialDate'.tr,
   );
   final endDate = DatePickerTextField(
-    label: 'End Date',
+    label: 'endDate'.tr,
   );
 
   @override
@@ -25,18 +25,18 @@ class ReportPage extends StatelessWidget {
             // drawer: const DrawerWidget(),
             appBar: AppBar(
               toolbarHeight: 50,
-              title: const Text('Reports'),
-              bottom: const TabBar(tabs: <Widget>[
+              title: Text('reports'.tr),
+              bottom: TabBar(tabs: <Widget>[
                 Tab(
-                  text: 'Overview',
+                  text: 'overview'.tr,
                 ),
                 Tab(
-                  text: 'Last week',
+                  text: 'lastWeek'.tr,
                 ),
                 Tab(
-                  text: 'Last Month',
+                  text: 'lastMonth'.tr,
                 ),
-                Tab(text: 'Custom'),
+                Tab(text: 'custom'.tr),
               ]),
             ),
             body: TabBarView(
@@ -87,7 +87,7 @@ class ReportPage extends StatelessWidget {
                                       endDate.dateTime ?? DateTime.now();
                                   c.reportVisible.toggle();
                                 },
-                                child: const Text('Submit'))),
+                                child: Text('submit'.tr))),
                       ),
                       c.reportVisible.value
                           ? DurationReport(

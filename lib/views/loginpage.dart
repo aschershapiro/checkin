@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Center(child: Text("Welcome to Checkin")),
+        title: Center(child: Text('welcome'.tr)),
       ),
       body: Center(
         child: Column(
@@ -31,9 +31,9 @@ class LoginPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Username or Email',
+                    labelText: 'usernameOrEmail'.tr,
                   ),
                   onChanged: (value) {
                     c.username.value = value;
@@ -47,9 +47,9 @@ class LoginPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
+                    labelText: 'password'.tr,
                   ),
                   obscureText: true,
                   onChanged: (value) {
@@ -81,7 +81,7 @@ class LoginPage extends StatelessWidget {
 
                     Get.showSnackbar(
                       GetSnackBar(
-                        title: 'Error',
+                        title: 'error'.tr,
                         message: resp.toString(),
                         icon: const Icon(Icons.error, color: Colors.red),
                         duration: const Duration(seconds: 4),
@@ -103,13 +103,13 @@ class LoginPage extends StatelessWidget {
                   onPressed: () async {
                     Get.toNamed('/signup');
                   },
-                  child: const Text('Sign up for a new account.')),
+                  child: Text('signupTitle'.tr)),
             ),
             Obx(() => Visibility(
                   visible: c.isSyncing.value,
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text('Syncing your data with cloud.'),
+                    child: Text('syncing'.tr),
                   ),
                 ))
           ],

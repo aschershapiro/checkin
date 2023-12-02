@@ -11,8 +11,8 @@ class MoodTrackingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            'How are you feeling today?',
+          Text(
+            'howAreYou'.tr,
             style: TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 16),
@@ -45,17 +45,16 @@ class MoodTrackingWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Day Summary:',
+          Text(
+            '${'daySummary'.tr}:',
             style: TextStyle(fontSize: 16),
           ),
           // const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              textDirection: TextDirection.rtl,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Day Summary"),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), hintText: "daySummary".tr),
               controller: TextEditingController(text: c.today.summary.value),
               keyboardType: TextInputType.multiline,
               maxLines: null,
@@ -74,17 +73,16 @@ class MoodTrackingWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Thanksgiving:',
+          Text(
+            '${'thanksgiving'.tr}:',
             style: TextStyle(fontSize: 16),
           ),
           // const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
-              textDirection: TextDirection.rtl,
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), hintText: "Thanksgiving"),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), hintText: 'thanksgiving'.tr),
               controller:
                   TextEditingController(text: c.today.thanksgiving.value),
               keyboardType: TextInputType.multiline,

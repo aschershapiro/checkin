@@ -80,7 +80,7 @@
     },
     {
       "id": "3:8950029361012055698",
-      "lastPropertyId": "9:2606502857583225965",
+      "lastPropertyId": "10:5014983029686738851",
       "name": "Settings",
       "properties": [
         {
@@ -123,6 +123,11 @@
           "id": "9:2606502857583225965",
           "name": "username",
           "type": 9
+        },
+        {
+          "id": "10:5014983029686738851",
+          "name": "dbLanguage",
+          "type": 6
         }
       ],
       "relations": []

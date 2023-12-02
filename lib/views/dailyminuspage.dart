@@ -18,7 +18,7 @@ class DailyMinusPage extends StatelessWidget {
         drawer: const DrawerWidget(),
         appBar: AppBar(
           toolbarHeight: 50,
-          title: const Text('Bad habits'),
+          title: Text('badHabits'.tr),
           actions: [
             Obx(
               () => Visibility(
@@ -62,9 +62,9 @@ class DailyMinusPage extends StatelessWidget {
             database.syncBox2Server(objectBox: objectBox);
             //c.today = Day.fromJson(objectBox.dayBox.getAll().first);
             Get.showSnackbar(
-              const GetSnackBar(
-                title: 'Done!',
-                message: 'All tasks saved successfully.',
+              GetSnackBar(
+                title: 'done'.tr,
+                message: 'doneMessage'.tr,
                 icon: Icon(Icons.done_all, color: Colors.amber),
                 duration: Duration(seconds: 2),
               ),

@@ -10,7 +10,7 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Sign up for a new account")),
+        title: Center(child: Text('signupTitle'.tr)),
       ),
       body: Center(
         child: Column(
@@ -30,9 +30,9 @@ class SignupPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Username',
+                    labelText: 'username'.tr,
                   ),
                   onChanged: (value) {
                     c.username_signup.value = value;
@@ -46,9 +46,9 @@ class SignupPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Password',
+                    labelText: 'password'.tr,
                   ),
                   obscureText: true,
                   onChanged: (value) {
@@ -63,9 +63,9 @@ class SignupPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Confirm Password',
+                    labelText: 'confirmPassword'.tr,
                   ),
                   obscureText: true,
                   onChanged: (value) {
@@ -80,9 +80,9 @@ class SignupPage extends StatelessWidget {
                 width: 300,
                 child: TextField(
                   autofocus: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                    labelText: 'email'.tr,
                   ),
                   onChanged: (value) {
                     c.email_signup.value = value;
@@ -106,7 +106,7 @@ class SignupPage extends StatelessWidget {
                       var resp = e.response;
                       Get.showSnackbar(
                         GetSnackBar(
-                          title: 'Error',
+                          title: 'error'.tr,
                           message: resp['data'].toString(),
                           icon: const Icon(Icons.error, color: Colors.red),
                           duration: const Duration(seconds: 4),

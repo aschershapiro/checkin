@@ -30,7 +30,7 @@ class TodoListWidget extends StatelessWidget {
               ),
               subtitle: todos[index].dueDate != null
                   ? Text(
-                      'Due Date:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ',
+                      '${'dueDate'.tr}:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ',
                       style: TextStyle(
                           color: DateTime.now().isAfter(todos[index].dueDate!)
                               ? Colors.red

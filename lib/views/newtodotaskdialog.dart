@@ -7,7 +7,7 @@ Future<TodoItem?> newTodoTaskDialog() {
   var taskTitle = '';
   var x = DatePickerTextField();
   return Get.defaultDialog<TodoItem>(
-    title: 'Add new Task',
+    title: 'addNewTask'.tr,
     backgroundColor: Colors.white,
     content: SizedBox(
       width: 600,
@@ -21,9 +21,9 @@ Future<TodoItem?> newTodoTaskDialog() {
               onChanged: (value) {
                 taskTitle = value;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: 'New Task',
+                labelText: 'newTask'.tr,
               ),
             ),
           ),
@@ -41,16 +41,19 @@ Future<TodoItem?> newTodoTaskDialog() {
           onPressed: () {
             return Get.back();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ),
       SizedBox(
         width: 100,
         child: TextButton(
           onPressed: () {
-            taskTitle.isNotEmpty ? Get.back(result: TodoItem(task: taskTitle, dueDate: x.dateTime)) : Get.back();
+            taskTitle.isNotEmpty
+                ? Get.back(
+                    result: TodoItem(task: taskTitle, dueDate: x.dateTime))
+                : Get.back();
           },
-          child: const Text('OK'),
+          child: Text('ok'.tr),
         ),
       ),
     ],

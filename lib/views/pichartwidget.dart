@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PieChartWidget extends StatefulWidget {
   const PieChartWidget({super.key, required this.title, required this.values});
@@ -162,7 +163,7 @@ class PieChartWidgetState extends State {
             badgePositionPercentageOffset: .98,
           );
         default:
-          throw Exception('Oh no');
+          throw Exception('error'.tr);
       }
     });
   }

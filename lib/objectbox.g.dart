@@ -98,7 +98,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(3, 8950029361012055698),
       name: 'Settings',
-      lastPropertyId: const IdUid(9, 2606502857583225965),
+      lastPropertyId: const IdUid(10, 5014983029686738851),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -140,6 +140,11 @@ final _entities = <ModelEntity>[
             id: const IdUid(9, 2606502857583225965),
             name: 'username',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 5014983029686738851),
+            name: 'dbLanguage',
+            type: 6,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -287,7 +292,7 @@ ModelDefinition getObjectBoxModel() {
               .map(fbb.writeString)
               .toList(growable: false));
           final usernameOffset = fbb.writeString(object.username);
-          fbb.startTable(10);
+          fbb.startTable(11);
           fbb.addInt64(0, object.id);
           fbb.addInt64(2, object.boxDate.millisecondsSinceEpoch);
           fbb.addOffset(3, userIdOffset);
@@ -296,6 +301,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(6, dailyPlusTitlesOffset);
           fbb.addOffset(7, dailyMinusTitlesOffset);
           fbb.addOffset(8, usernameOffset);
+          fbb.addInt64(9, object.dbLanguage);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -322,7 +328,9 @@ ModelDefinition getObjectBoxModel() {
                     lazy: false)
                 .vTableGet(buffer, rootOffset, 18, [])
             ..username = const fb.StringReader(asciiOptimization: true)
-                .vTableGet(buffer, rootOffset, 20, '');
+                .vTableGet(buffer, rootOffset, 20, '')
+            ..dbLanguage = const fb.Int64Reader()
+                .vTableGetNullable(buffer, rootOffset, 22);
 
           return object;
         })
@@ -408,4 +416,8 @@ class Settings_ {
   /// see [Settings.username]
   static final username =
       QueryStringProperty<Settings>(_entities[2].properties[7]);
+
+  /// see [Settings.dbLanguage]
+  static final dbLanguage =
+      QueryIntegerProperty<Settings>(_entities[2].properties[8]);
 }

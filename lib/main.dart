@@ -3,6 +3,7 @@ import 'package:checkin/models/notification.dart';
 import 'package:checkin/routes.dart';
 import 'package:checkin/objectbox.dart';
 import 'package:checkin/controllers/controllers.dart';
+import 'package:checkin/translations/messages.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/splashscreen.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,11 @@ Future<void> main() async {
     await notif.scheduleWeeklyTenPMNotification();
   }
   runApp(GetMaterialApp(
+    translations: Messages(),
+    locale: Locale('fa', 'IR'),
+    fallbackLocale: Locale('en', 'US'),
     debugShowCheckedModeBanner: false,
-    title: 'Checkin',
+    title: 'checkin'.tr,
     home: database.isAuth ? const SplashScreen() : const LoginPage(),
     //initialRoute: '/todolist',
     getPages: appRoutes,

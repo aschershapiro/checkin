@@ -51,7 +51,7 @@ class TodoListPage extends StatelessWidget {
           ),
         ],
         toolbarHeight: 50,
-        title: const Text('To Do List'),
+        title: Text('todoList'.tr),
       ),
       bottomNavigationBar: const BottomBar(),
       body: Container(

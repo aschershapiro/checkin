@@ -3,6 +3,7 @@ import 'package:checkin/models/reports.dart';
 import 'package:checkin/views/historypage.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/reportpage.dart';
+import 'package:checkin/views/settingspage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,21 +27,21 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text('Trends'),
+            title: Text('trends'.tr),
             leading: const Icon(Icons.summarize),
             onTap: () {
               Get.to(() => ReportPage());
             },
           ),
           ListTile(
-            title: const Text('History'),
+            title: Text('history'.tr),
             leading: const Icon(Icons.history),
             onTap: () {
               Get.to(() => HistoryPage());
             },
           ),
           ListTile(
-            title: const Text('Log out'),
+            title: Text('logout'.tr),
             leading: const Icon(Icons.logout),
             onTap: () {
               database.logout();
@@ -48,11 +49,10 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Settings'),
+            title: Text('settings'.tr),
             leading: const Icon(Icons.settings),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Get.to(() => const SettingsPage());
             },
           ),
         ],

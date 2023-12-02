@@ -1,6 +1,7 @@
 import 'package:checkin/models/reports.dart';
 import 'package:checkin/views/pichartwidget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DurationReport extends StatelessWidget {
   DurationReport({super.key, required this.startDate, required this.endDate});
@@ -16,9 +17,9 @@ class DurationReport extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(color: Colors.green),
           height: 40,
-          child: const Center(
+          child: Center(
               child: Text(
-            "Good Habits",
+            "goodHabits".tr,
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           )),
@@ -63,9 +64,9 @@ class DurationReport extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(color: Colors.red),
           height: 40,
-          child: const Center(
+          child: Center(
               child: Text(
-            "Bad Habits",
+            "badHabits".tr,
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           )),

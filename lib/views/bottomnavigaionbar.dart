@@ -15,23 +15,23 @@ class BottomBar extends StatelessWidget {
           c.pagecounter.value = value;
           Get.toNamed(appRoutes[value].name);
         },
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
               icon: Icon(Icons.checklist_outlined),
               selectedIcon: Icon(Icons.checklist),
-              label: 'To Do'),
+              label: 'todo'.tr),
           NavigationDestination(
               icon: Icon(Icons.plus_one_outlined),
               selectedIcon: Icon(Icons.plus_one),
-              label: 'Good Habits'),
+              label: 'goodHabits'.tr),
           NavigationDestination(
               icon: Icon(Icons.exposure_minus_1_outlined),
               selectedIcon: Icon(Icons.exposure_minus_1),
-              label: 'Bad Habits'),
+              label: 'badHabits'.tr),
           NavigationDestination(
               icon: Icon(Icons.mood_outlined),
               selectedIcon: Icon(Icons.mood),
-              label: 'Mood'),
+              label: 'mood'.tr),
         ],
       ),
     );

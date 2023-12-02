@@ -23,7 +23,7 @@ class MoodTrackerPage extends StatelessWidget {
         drawer: const DrawerWidget(),
         appBar: AppBar(
           toolbarHeight: 50,
-          title: const Text('Mood'),
+          title: Text('mood'.tr),
         ),
         bottomNavigationBar: const BottomBar(),
         body: Container(

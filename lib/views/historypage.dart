@@ -1,5 +1,6 @@
 import 'package:checkin/models/history.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('History'),
+        title: Text('history'.tr),
       ),
       body: ListView.builder(
         itemCount: history.daysList.length,
@@ -52,13 +53,13 @@ class _HistoryPageState extends State<HistoryPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Day Summary:',
+                            '${'daySummary'.tr}:',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(history.daysList[index].summary.value),
                           SizedBox(height: 10),
                           Text(
-                            'I was thankful for...',
+                            'thanksgivingHistory'.tr,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(history.daysList[index].thanksgiving.value),

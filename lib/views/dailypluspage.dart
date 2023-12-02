@@ -18,7 +18,7 @@ class DailyPlusPage extends StatelessWidget {
         drawer: const DrawerWidget(),
         appBar: AppBar(
           toolbarHeight: 50,
-          title: Text('Good habits'),
+          title: Text('goodHabits'.tr),
           actions: [
             Obx(
               () => Visibility(
@@ -61,9 +61,9 @@ class DailyPlusPage extends StatelessWidget {
             objectBox.settingsBox.put(c.settings.value);
             database.syncBox2Server(objectBox: objectBox);
             Get.showSnackbar(
-              const GetSnackBar(
-                title: 'Done!',
-                message: 'All tasks saved successfully.',
+              GetSnackBar(
+                title: 'done'.tr,
+                message: 'doneMessage'.tr,
                 icon: Icon(Icons.done_all, color: Colors.amber),
                 duration: Duration(seconds: 2),
               ),
