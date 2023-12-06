@@ -48,6 +48,9 @@ dependencies:
   encrypt: ^5.0.1
   flutter_heatmap_calendar: ^1.0.5
   flutter_local_notifications: ^16.1.0
+  shamsi_date: ^1.0.2
+  persian_datetime_picker: ^2.6.0
+  connectivity_plus: ^5.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

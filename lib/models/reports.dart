@@ -36,7 +36,7 @@ class Reports {
       tasks = c.today.taskMinusList.map((e) => e.title).toList();
     }
     var resp = await database.getAllDays();
-    dateSpan = _getDaysBetween(init, end);
+    dateSpan = _getDaysBetween(init, DateTime(end.year, end.month, end.day));
     for (var element in resp) {
       availableDates
           .add((element.data['date'] as String).substring(0, 10).trim());

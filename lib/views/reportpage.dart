@@ -6,6 +6,7 @@ import 'package:checkin/views/reportduration.dart';
 import 'package:checkin/views/reportoverview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 class ReportPage extends StatelessWidget {
   ReportPage({super.key});
@@ -18,6 +19,21 @@ class ReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var jmonth = Jalali.now()
+        .toDateTime()
+        .subtract(Duration(days: Jalali.now().day))
+        .subtract(Duration(days: 1))
+        .toJalali()
+        .month;
+    var lastWeekStart =
+        DateTime.now().subtract(Duration(days: Jalali.now().weekDay - 1 + 7));
+    var lastWeekEnd =
+        DateTime.now().subtract(Duration(days: Jalali.now().weekDay));
+    var lastMonthStart = Jalali(Jalali.now().year, jmonth, 1).toDateTime();
+    var lastMonthEnd =
+        Jalali(Jalali.now().year, jmonth, lastMonthStart.toJalali().monthLength)
+            .toDateTime();
+
     return Obx(() => DefaultTabController(
           initialIndex: 0,
           length: 4,
@@ -44,15 +60,14 @@ class ReportPage extends StatelessWidget {
                 ReportOverview(),
                 SingleChildScrollView(
                   child: DurationReport(
-                    startDate: DateTime.now().subtract(const Duration(days: 6)),
-                    endDate: DateTime.now(),
+                    startDate: lastWeekStart,
+                    endDate: lastWeekEnd,
                   ),
                 ),
                 SingleChildScrollView(
                   child: DurationReport(
-                    startDate:
-                        DateTime.now().subtract(const Duration(days: 29)),
-                    endDate: DateTime.now(),
+                    startDate: lastMonthStart,
+                    endDate: lastMonthEnd,
                   ),
                 ),
                 SingleChildScrollView(

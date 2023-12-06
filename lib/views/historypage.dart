@@ -1,6 +1,7 @@
 import 'package:checkin/models/history.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -37,7 +38,11 @@ class _HistoryPageState extends State<HistoryPage> {
                           .emojiFromString(history.daysList[index].mood.value),
                       style: TextStyle(fontSize: 30),
                     ),
-                    title: Text(history.daysList[index].date.toString()),
+                    title: Get.locale == const Locale('en', 'US')
+                        ? Text(history.daysList[index].date)
+                        : Text(DateTime.parse(history.daysList[index].date)
+                            .toJalali()
+                            .formatCompactDate()),
                     trailing: Icon(_expanded[index]
                         ? Icons.expand_less
                         : Icons.expand_more),

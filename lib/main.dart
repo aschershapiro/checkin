@@ -1,5 +1,6 @@
 import 'package:checkin/database/database.dart';
 import 'package:checkin/models/notification.dart';
+import 'package:checkin/models/settings.dart';
 import 'package:checkin/routes.dart';
 import 'package:checkin/objectbox.dart';
 import 'package:checkin/controllers/controllers.dart';
@@ -26,7 +27,9 @@ Future<void> main() async {
   }
   runApp(GetMaterialApp(
     translations: Messages(),
-    locale: Locale('fa', 'IR'),
+    locale: c.settings.value.language.value == Languages.persian
+        ? Locale('fa', 'IR')
+        : Locale('en', 'US'),
     fallbackLocale: Locale('en', 'US'),
     debugShowCheckedModeBanner: false,
     title: 'checkin'.tr,

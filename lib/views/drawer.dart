@@ -6,6 +6,7 @@ import 'package:checkin/views/reportpage.dart';
 import 'package:checkin/views/settingspage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -21,10 +22,15 @@ class DrawerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
             ),
-            child: Text(
-              'Checkin 0.1b\n${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day} \nID: ${c.settings.value.userId}',
-              style: const TextStyle(color: Colors.white),
-            ),
+            child: Get.locale == const Locale('en', 'US')
+                ? Text(
+                    'Checkin 0.1b\n${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day} \nID: ${c.settings.value.userId}',
+                    style: const TextStyle(color: Colors.white),
+                  )
+                : Text(
+                    'چکین 0.1b \n${Jalali.now().year}/${Jalali.now().month}/${Jalali.now().day} \nID: ${c.settings.value.userId}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
           ),
           ListTile(
             title: Text('trends'.tr),

@@ -7,6 +7,7 @@ import 'package:checkin/objectbox.dart';
 import 'package:checkin/objectbox.g.dart';
 import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class Database {
   final _pb = PocketBase('https://pb.greenbase.ir');
@@ -20,6 +21,8 @@ class Database {
   }
 
   Future<void> syncBox2Server({required ObjectBox objectBox}) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) return;
     // sync todos from box to server
     try {
       var resp = await _pb.collection('todo_items').getFullList();
@@ -176,6 +179,8 @@ class Database {
   }
 
   Future<void> syncServer2Box({required ObjectBox objectBox}) async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) return;
     //sync todos from server to box
     var resp = await _pb.collection('todo_items').getFullList();
     var boxItems = objectBox.todosBox.getAll();

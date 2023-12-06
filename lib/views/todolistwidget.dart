@@ -4,6 +4,7 @@ import 'package:checkin/models/todoitem.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class TodoListWidget extends StatelessWidget {
   final List<TodoItem> todos;
@@ -29,13 +30,23 @@ class TodoListWidget extends StatelessWidget {
                 },
               ),
               subtitle: todos[index].dueDate != null
-                  ? Text(
-                      '${'dueDate'.tr}:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ',
-                      style: TextStyle(
-                          color: DateTime.now().isAfter(todos[index].dueDate!)
-                              ? Colors.red
-                              : Colors.grey),
-                    )
+                  ? Get.locale == const Locale('en', 'US')
+                      ? Text(
+                          '${'dueDate'.tr}:${DateFormat('yyyy-MM-dd').format(todos[index].dueDate ?? DateTime.now())} ',
+                          style: TextStyle(
+                              color:
+                                  DateTime.now().isAfter(todos[index].dueDate!)
+                                      ? Colors.red
+                                      : Colors.grey),
+                        )
+                      : Text(
+                          '${'dueDate'.tr}:${todos[index].dueDate?.toJalali().year}/${todos[index].dueDate?.toJalali().month}/${todos[index].dueDate?.toJalali().day} ',
+                          style: TextStyle(
+                              color:
+                                  DateTime.now().isAfter(todos[index].dueDate!)
+                                      ? Colors.red
+                                      : Colors.grey),
+                        )
                   : null,
               onLongPress: () {
                 todos[index].selected.toggle();

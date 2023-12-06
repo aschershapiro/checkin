@@ -29,6 +29,7 @@ class SettingsPage extends StatelessWidget {
                   selected: <Languages>{c.settings.value.language.value},
                   onSelectionChanged: (Set<Languages> p0) {
                     c.settings.value.language.value = p0.first;
+                    objectBox.settingsBox.put(c.settings.value);
                     if (c.settings.value.language.value == Languages.persian) {
                       var locale = Locale('fa', 'IR');
                       Get.updateLocale(locale);
