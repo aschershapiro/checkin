@@ -31,11 +31,11 @@ class SettingsPage extends StatelessWidget {
                     c.settings.value.language.value = p0.first;
                     objectBox.settingsBox.put(c.settings.value);
                     if (c.settings.value.language.value == Languages.persian) {
-                      var locale = Locale('fa', 'IR');
+                      var locale = const Locale('fa', 'IR');
                       Get.updateLocale(locale);
                     } else if (c.settings.value.language.value ==
                         Languages.english) {
-                      var locale = Locale('en', 'US');
+                      var locale = const Locale('en', 'US');
                       Get.updateLocale(locale);
                     }
                   },

@@ -1,10 +1,11 @@
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
-import 'package:checkin/objectbox.g.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MoodTrackingWidget extends StatelessWidget {
+  const MoodTrackingWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -13,7 +14,7 @@ class MoodTrackingWidget extends StatelessWidget {
         children: [
           Text(
             'howAreYou'.tr,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -47,14 +48,15 @@ class MoodTrackingWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             '${'daySummary'.tr}:',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           // const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
               decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: "daySummary".tr),
+                  border: const OutlineInputBorder(),
+                  hintText: "daySummary".tr),
               controller: TextEditingController(text: c.today.summary.value),
               keyboardType: TextInputType.multiline,
               maxLines: null,
@@ -75,14 +77,15 @@ class MoodTrackingWidget extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             '${'thanksgiving'.tr}:',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           // const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TextField(
               decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: 'thanksgiving'.tr),
+                  border: const OutlineInputBorder(),
+                  hintText: 'thanksgiving'.tr),
               controller:
                   TextEditingController(text: c.today.thanksgiving.value),
               keyboardType: TextInputType.multiline,
@@ -121,14 +124,14 @@ class MoodTrackingWidget extends StatelessWidget {
           database.syncBox2Server(objectBox: objectBox);
         },
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: isSelected ? Colors.yellow : null,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
             icon,
-            style: TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
           ),
         ),
       ),

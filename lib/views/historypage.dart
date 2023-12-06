@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class HistoryPage extends StatefulWidget {
+  const HistoryPage({super.key});
+
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
@@ -36,7 +38,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     leading: Text(
                       history
                           .emojiFromString(history.daysList[index].mood.value),
-                      style: TextStyle(fontSize: 30),
+                      style: const TextStyle(fontSize: 30),
                     ),
                     title: Get.locale == const Locale('en', 'US')
                         ? Text(history.daysList[index].date)
@@ -59,13 +61,13 @@ class _HistoryPageState extends State<HistoryPage> {
                         children: [
                           Text(
                             '${'daySummary'.tr}:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(history.daysList[index].summary.value),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             'thanksgivingHistory'.tr,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(history.daysList[index].thanksgiving.value),
                         ],

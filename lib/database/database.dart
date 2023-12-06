@@ -5,6 +5,7 @@ import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/objectbox.dart';
 import 'package:checkin/objectbox.g.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -174,7 +175,9 @@ class Database {
         'value': DateTime.now().subtract(const Duration(minutes: 1)).toString()
       });
     } on Exception catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -322,7 +325,9 @@ class Database {
       try {
         syncBox2Server(objectBox: objectBox);
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
       }
     }
   }
@@ -338,7 +343,9 @@ class Database {
         await c.init();
         return _pb.authStore.isValid;
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         await c.init();
         return false;
       }

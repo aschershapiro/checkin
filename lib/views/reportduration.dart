@@ -20,7 +20,7 @@ class DurationReport extends StatelessWidget {
           child: Center(
               child: Text(
             "goodHabits".tr,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           )),
         ),
@@ -67,7 +67,7 @@ class DurationReport extends StatelessWidget {
           child: Center(
               child: Text(
             "badHabits".tr,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
           )),
         ),

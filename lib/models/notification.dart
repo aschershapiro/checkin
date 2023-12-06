@@ -35,20 +35,20 @@ class LocalNotificationService {
             priority: Priority.high,
             ticker: 'ticker');
 
-    int notification_id = 1;
+    int notificationId = 1;
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
 
     await flutterLocalNotificationsPlugin.show(
-        notification_id, title, value, notificationDetails,
+        notificationId, title, value, notificationDetails,
         payload: 'Not present');
   }
 
   void showTimedNotification() async {
-    int notification_id = 1;
+    int notificationId = 1;
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        notification_id,
+        notificationId,
         "Title",
         "Description",
         tz.TZDateTime.now(tz.local).add(const Duration(seconds: 20)),
@@ -59,7 +59,8 @@ class LocalNotificationService {
           importance: Importance.max,
           priority: Priority.high,
         )),
-        androidAllowWhileIdle: true,
+        // androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }

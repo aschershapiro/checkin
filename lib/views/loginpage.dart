@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'usernameOrEmail'.tr,
                   ),
                   onChanged: (value) {
@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'password'.tr,
                   ),
                   obscureText: true,
@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
             Obx(() => Visibility(
                   visible: c.isSyncing.value,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text('syncing'.tr),
                   ),
                 ))

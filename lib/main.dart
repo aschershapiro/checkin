@@ -28,9 +28,9 @@ Future<void> main() async {
   runApp(GetMaterialApp(
     translations: Messages(),
     locale: c.settings.value.language.value == Languages.persian
-        ? Locale('fa', 'IR')
-        : Locale('en', 'US'),
-    fallbackLocale: Locale('en', 'US'),
+        ? const Locale('fa', 'IR')
+        : const Locale('en', 'US'),
+    fallbackLocale: const Locale('en', 'US'),
     debugShowCheckedModeBanner: false,
     title: 'checkin'.tr,
     home: database.isAuth ? const SplashScreen() : const LoginPage(),

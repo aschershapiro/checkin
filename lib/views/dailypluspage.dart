@@ -64,8 +64,8 @@ class DailyPlusPage extends StatelessWidget {
               GetSnackBar(
                 title: 'done'.tr,
                 message: 'doneMessage'.tr,
-                icon: Icon(Icons.done_all, color: Colors.amber),
-                duration: Duration(seconds: 2),
+                icon: const Icon(Icons.done_all, color: Colors.amber),
+                duration: const Duration(seconds: 2),
               ),
             );
           },

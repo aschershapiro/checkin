@@ -31,7 +31,7 @@ class SplashScreen extends StatelessWidget {
                     child: TextField(
                       autofocus: true,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         labelText: 'password'.tr,
                       ),
                       obscureText: true,
@@ -55,8 +55,8 @@ class SplashScreen extends StatelessWidget {
                             GetSnackBar(
                               title: 'error'.tr,
                               message: "incorrectPassword".tr,
-                              icon: Icon(Icons.error, color: Colors.red),
-                              duration: Duration(seconds: 4),
+                              icon: const Icon(Icons.error, color: Colors.red),
+                              duration: const Duration(seconds: 4),
                             ),
                           );
                           c.isLoading.value = false;

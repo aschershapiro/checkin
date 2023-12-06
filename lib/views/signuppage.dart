@@ -31,7 +31,7 @@ class SignupPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'username'.tr,
                   ),
                   onChanged: (value) {
@@ -47,7 +47,7 @@ class SignupPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'password'.tr,
                   ),
                   obscureText: true,
@@ -64,7 +64,7 @@ class SignupPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'confirmPassword'.tr,
                   ),
                   obscureText: true,
@@ -81,7 +81,7 @@ class SignupPage extends StatelessWidget {
                 child: TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'email'.tr,
                   ),
                   onChanged: (value) {

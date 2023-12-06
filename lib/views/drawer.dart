@@ -1,5 +1,4 @@
 import 'package:checkin/main.dart';
-import 'package:checkin/models/reports.dart';
 import 'package:checkin/views/historypage.dart';
 import 'package:checkin/views/loginpage.dart';
 import 'package:checkin/views/reportpage.dart';
@@ -43,7 +42,7 @@ class DrawerWidget extends StatelessWidget {
             title: Text('history'.tr),
             leading: const Icon(Icons.history),
             onTap: () {
-              Get.to(() => HistoryPage());
+              Get.to(() => const HistoryPage());
             },
           ),
           ListTile(

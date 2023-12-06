@@ -16,7 +16,7 @@ Future<DailyTask?> newDailyDialog() {
           taskTitle = value;
         },
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           labelText: 'newTask'.tr,
         ),
       ),

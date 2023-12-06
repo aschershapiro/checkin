@@ -1,10 +1,6 @@
-import 'package:checkin/main.dart';
-import 'package:checkin/models/notification.dart';
 import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/views/drawer.dart';
 import 'package:checkin/views/moodtrackerwidget.dart';
-import 'package:checkin/views/newtodotaskdialog.dart';
-import 'package:checkin/views/todolistwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +25,7 @@ class MoodTrackerPage extends StatelessWidget {
         body: Container(
           color: Colors.white,
           alignment: Alignment.center,
-          child: ColoredBox(
+          child: const ColoredBox(
             color: Colors.green,
             child: Material(
               child: MoodTrackingWidget(),

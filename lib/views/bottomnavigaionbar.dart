@@ -17,20 +17,20 @@ class BottomBar extends StatelessWidget {
         },
         destinations: <Widget>[
           NavigationDestination(
-              icon: Icon(Icons.checklist_outlined),
-              selectedIcon: Icon(Icons.checklist),
+              icon: const Icon(Icons.checklist_outlined),
+              selectedIcon: const Icon(Icons.checklist),
               label: 'todo'.tr),
           NavigationDestination(
-              icon: Icon(Icons.plus_one_outlined),
-              selectedIcon: Icon(Icons.plus_one),
+              icon: const Icon(Icons.plus_one_outlined),
+              selectedIcon: const Icon(Icons.plus_one),
               label: 'goodHabits'.tr),
           NavigationDestination(
-              icon: Icon(Icons.exposure_minus_1_outlined),
-              selectedIcon: Icon(Icons.exposure_minus_1),
+              icon: const Icon(Icons.exposure_minus_1_outlined),
+              selectedIcon: const Icon(Icons.exposure_minus_1),
               label: 'badHabits'.tr),
           NavigationDestination(
-              icon: Icon(Icons.mood_outlined),
-              selectedIcon: Icon(Icons.mood),
+              icon: const Icon(Icons.mood_outlined),
+              selectedIcon: const Icon(Icons.mood),
               label: 'mood'.tr),
         ],
       ),

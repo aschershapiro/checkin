@@ -1,7 +1,5 @@
 import 'package:checkin/main.dart';
-import 'package:checkin/views/bottomnavigaionbar.dart';
 import 'package:checkin/views/datepickerwidget.dart';
-import 'package:checkin/views/drawer.dart';
 import 'package:checkin/views/reportduration.dart';
 import 'package:checkin/views/reportoverview.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,7 @@ class ReportPage extends StatelessWidget {
     var jmonth = Jalali.now()
         .toDateTime()
         .subtract(Duration(days: Jalali.now().day))
-        .subtract(Duration(days: 1))
+        .subtract(const Duration(days: 1))
         .toJalali()
         .month;
     var lastWeekStart =

@@ -4,6 +4,7 @@ import 'package:checkin/views/moodtrackerpage.dart';
 import 'package:checkin/views/reportpage.dart';
 import 'package:checkin/views/signuppage.dart';
 import 'package:checkin/views/todolistpage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 List<GetPage<dynamic>> appRoutes = [
@@ -53,7 +54,9 @@ List<GetPage<dynamic>> appRoutes = [
 class MyMiddelware extends GetMiddleware {
   @override
   GetPage? onPageCalled(GetPage? page) {
-    print(page?.name);
+    if (kDebugMode) {
+      print(page?.name);
+    }
     return super.onPageCalled(page);
   }
 }
