@@ -1,6 +1,7 @@
 import 'package:checkin/main.dart';
 import 'package:checkin/models/day.dart';
 import 'package:checkin/models/encryption.dart';
+import 'package:checkin/models/longtermitem.dart';
 import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:checkin/objectbox.dart';
@@ -24,8 +25,9 @@ class Database {
   Future<void> syncBox2Server({required ObjectBox objectBox}) async {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) return;
-    // sync todos from box to server
+
     try {
+      // sync todos from box to server
       var resp = await _pb.collection('todo_items').getFullList();
       var boxItems = objectBox.todosBox.getAll();
       for (var item in boxItems) {
@@ -72,6 +74,56 @@ class Database {
       for (var item in resp) {
         if (!boxIds.contains(item.data['boxid'])) {
           _pb.collection('todo_items').delete(item.id);
+        }
+      }
+
+      // sync longterms
+      var resp2 = await _pb.collection('longterm_items').getFullList();
+      var boxlongterms = objectBox.longtermsBox.getAll();
+      for (var item in boxlongterms) {
+        var contains = resp2.fold(
+            false,
+            (previousValue, element) =>
+                previousValue || element.data['boxid'] == item.id);
+        // update
+        if (contains) {
+          var pbId = resp2
+              .where((element) => element.data['boxid'] == item.id)
+              .first
+              .id;
+          final body = <String, dynamic>{
+            "task": Encryption.encryptStringWithPassword(
+                item.task, c.settings.value.password),
+            "user": _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id,
+            "completed": item.completed.value,
+            "duedate": item.dueDate.toString()
+          };
+          _pb.collection('longterm_items').update(pbId, body: body);
+        }
+        // create
+        else {
+          final body = <String, dynamic>{
+            "boxid": item.id,
+            "task": Encryption.encryptStringWithPassword(
+                item.task, c.settings.value.password),
+            'user': _pb.authStore.model is String
+                ? _pb.authStore.model
+                : _pb.authStore.model.id,
+            "completed": item.completed.value,
+            "duedate": item.dueDate.toString()
+          };
+          _pb.collection('longterm_items').create(
+                body: body,
+              );
+        }
+      }
+      //delete
+      var boxIds2 = boxlongterms.map((e) => e.id).toList();
+      for (var item in resp2) {
+        if (!boxIds2.contains(item.data['boxid'])) {
+          _pb.collection('longterm_items').delete(item.id);
         }
       }
 
@@ -228,6 +280,53 @@ class Database {
     for (var item in boxItems) {
       if (!todosIds.contains(item.id)) {
         objectBox.todosBox.remove(item.id);
+      }
+    }
+
+    // sync longterms from server to box
+    var resp2 = await _pb.collection('longterm_items').getFullList();
+    var boxLongterms = objectBox.longtermsBox.getAll();
+    for (var item in resp2) {
+      var contains = boxLongterms.fold(
+          false,
+          (previousValue, element) =>
+              previousValue || element.id == item.data['boxid']);
+      //update
+      if (contains) {
+        var boxId = boxLongterms
+            .where((element) => element.id == item.data['boxid'])
+            .first
+            .id;
+        var longterm = LongTermItem(
+            task: Encryption.decryptStringWithPassword(
+                item.data['task'], c.settings.value.password))
+          ..completed.value = item.data['completed']
+          ..dueDate = DateTime.tryParse(
+              item.data['duedate'].toString().isNotEmpty
+                  ? item.data['duedate'].toString().substring(0, 10)
+                  : '')
+          ..id = boxId;
+        objectBox.longtermsBox.put(longterm, mode: PutMode.update);
+      }
+      // create
+      else {
+        var longterm = LongTermItem(
+            task: Encryption.decryptStringWithPassword(
+                item.data['task'], c.settings.value.password))
+          ..completed.value = item.data['completed']
+          ..dueDate = DateTime.tryParse(
+              item.data['duedate'].toString().isNotEmpty
+                  ? item.data['duedate'].toString().substring(0, 10)
+                  : '')
+          ..id = item.data['boxid'];
+        objectBox.longtermsBox.put(longterm, mode: PutMode.put);
+      }
+    }
+    //delete
+    var longtermIds = resp2.map((e) => e.data['boxid']).toList();
+    for (var item in boxLongterms) {
+      if (!longtermIds.contains(item.id)) {
+        objectBox.longtermsBox.remove(item.id);
       }
     }
 

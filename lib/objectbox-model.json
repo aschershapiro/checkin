@@ -131,9 +131,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "4:5426131947885566462",
+      "lastPropertyId": "4:6269722507346274280",
+      "name": "LongTermItem",
+      "properties": [
+        {
+          "id": "1:1801824304918441401",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:493737810913221418",
+          "name": "task",
+          "type": 9
+        },
+        {
+          "id": "3:4964150174528382558",
+          "name": "dueDate",
+          "type": 10
+        },
+        {
+          "id": "4:6269722507346274280",
+          "name": "status",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "3:8950029361012055698",
+  "lastEntityId": "4:5426131947885566462",
   "lastIndexId": "1:6202541818411785614",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

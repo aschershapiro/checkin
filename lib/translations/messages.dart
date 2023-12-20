@@ -44,7 +44,8 @@ class Messages extends Translations {
           'todoList': 'To Do List',
           'checkin': 'Checkin',
           'notifMessage': "Don't forget to check your daily activities!",
-          'dueDate': 'Due Date'
+          'dueDate': 'Due Date',
+          'longTermTitle': 'Longterm Goals',
         },
         'fa_IR': {
           'signupTitle': 'ثبت نام اکانت جدید',
@@ -87,7 +88,8 @@ class Messages extends Translations {
           'todoList': 'لیست کارها',
           'checkin': 'چکین',
           'notifMessage': "یادت نره کارهای امروزت رو چک کنی!",
-          'dueDate': 'سررسید'
+          'dueDate': 'سررسید',
+          'longTermTitle': 'اهداف بلند مدت'
         }
       };
 }

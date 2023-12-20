@@ -1,6 +1,7 @@
 import 'package:checkin/main.dart';
 import 'package:checkin/views/historypage.dart';
 import 'package:checkin/views/loginpage.dart';
+import 'package:checkin/views/longtermpage.dart';
 import 'package:checkin/views/reportpage.dart';
 import 'package:checkin/views/settingspage.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +47,10 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('logout'.tr),
-            leading: const Icon(Icons.logout),
+            title: Text('longTermTitle'.tr),
+            leading: const Icon(Icons.flag),
             onTap: () {
-              database.logout();
-              Get.off(() => const LoginPage());
+              Get.to(() => LongTermPage());
             },
           ),
           ListTile(
@@ -58,6 +58,14 @@ class DrawerWidget extends StatelessWidget {
             leading: const Icon(Icons.settings),
             onTap: () {
               Get.to(() => const SettingsPage());
+            },
+          ),
+          ListTile(
+            title: Text('logout'.tr),
+            leading: const Icon(Icons.logout),
+            onTap: () {
+              database.logout();
+              Get.off(() => const LoginPage());
             },
           ),
         ],

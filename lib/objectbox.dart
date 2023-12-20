@@ -1,4 +1,5 @@
 import 'package:checkin/models/day.dart';
+import 'package:checkin/models/longtermitem.dart';
 import 'package:checkin/models/settings.dart';
 import 'package:checkin/models/todoitem.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +11,14 @@ class ObjectBox {
   /// The Store of this app.
   late final Store store;
   late final Box<TodoItem> todosBox;
+  late final Box<LongTermItem> longtermsBox;
   late final Box<DayBox> dayBox;
   late final Box<Settings> settingsBox;
   late final Query<DayBox> _query;
 
   ObjectBox._create(this.store) {
     todosBox = store.box<TodoItem>();
+    longtermsBox = store.box<LongTermItem>();
     dayBox = store.box<DayBox>();
     settingsBox = store.box<Settings>();
     // Add any additional setup code, e.g. build queries.

@@ -7,7 +7,7 @@ class DatePickerTextField extends StatelessWidget {
   DatePickerTextField({Key? key, this.label = 'Due date'}) : super(key: key);
   final TextEditingController _dateController = TextEditingController();
   final String label;
-  late final DateTime? dateTime;
+  DateTime? dateTime;
   @override
   Widget build(BuildContext context) {
     _dateController.text = '';

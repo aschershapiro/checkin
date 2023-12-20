@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/day.dart';
+import 'models/longtermitem.dart';
 import 'models/settings.dart';
 import 'models/todoitem.dart';
 
@@ -148,6 +149,35 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(4, 5426131947885566462),
+      name: 'LongTermItem',
+      lastPropertyId: const IdUid(4, 6269722507346274280),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 1801824304918441401),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        ModelProperty(
+            id: const IdUid(2, 493737810913221418),
+            name: 'task',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 4964150174528382558),
+            name: 'dueDate',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 6269722507346274280),
+            name: 'status',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -178,7 +208,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(3, 8950029361012055698),
+      lastEntityId: const IdUid(4, 5426131947885566462),
       lastIndexId: const IdUid(1, 6202541818411785614),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -333,6 +363,41 @@ ModelDefinition getObjectBoxModel() {
                 .vTableGetNullable(buffer, rootOffset, 22);
 
           return object;
+        }),
+    LongTermItem: EntityDefinition<LongTermItem>(
+        model: _entities[3],
+        toOneRelations: (LongTermItem object) => [],
+        toManyRelations: (LongTermItem object) => {},
+        getId: (LongTermItem object) => object.id,
+        setId: (LongTermItem object, int id) {
+          object.id = id;
+        },
+        objectToFB: (LongTermItem object, fb.Builder fbb) {
+          final taskOffset = fbb.writeString(object.task);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, taskOffset);
+          fbb.addInt64(2, object.dueDate?.millisecondsSinceEpoch);
+          fbb.addBool(3, object.status);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final dueDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 8);
+          final taskParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final dueDateParam = dueDateValue == null
+              ? null
+              : DateTime.fromMillisecondsSinceEpoch(dueDateValue);
+          final object = LongTermItem(task: taskParam, dueDate: dueDateParam)
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0)
+            ..status =
+                const fb.BoolReader().vTableGet(buffer, rootOffset, 10, false);
+
+          return object;
         })
   };
 
@@ -420,4 +485,23 @@ class Settings_ {
   /// see [Settings.dbLanguage]
   static final dbLanguage =
       QueryIntegerProperty<Settings>(_entities[2].properties[8]);
+}
+
+/// [LongTermItem] entity fields to define ObjectBox queries.
+class LongTermItem_ {
+  /// see [LongTermItem.id]
+  static final id =
+      QueryIntegerProperty<LongTermItem>(_entities[3].properties[0]);
+
+  /// see [LongTermItem.task]
+  static final task =
+      QueryStringProperty<LongTermItem>(_entities[3].properties[1]);
+
+  /// see [LongTermItem.dueDate]
+  static final dueDate =
+      QueryIntegerProperty<LongTermItem>(_entities[3].properties[2]);
+
+  /// see [LongTermItem.status]
+  static final status =
+      QueryBooleanProperty<LongTermItem>(_entities[3].properties[3]);
 }
