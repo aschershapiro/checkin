@@ -1,4 +1,3 @@
-import 'package:checkin/controllers/controllers.dart';
 import 'package:checkin/main.dart';
 import 'package:checkin/models/longtermitem.dart';
 import 'package:flutter/material.dart';

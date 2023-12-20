@@ -452,7 +452,7 @@ class Database {
   }
 
   Future<void> login(String email, String password) async {
-    final authData = await _pb.collection('users').authWithPassword(
+    await _pb.collection('users').authWithPassword(
           email,
           password,
         );
